@@ -51,16 +51,38 @@ def nameselection():
 
 class Enemy:
      
-     def __init__(self, health, power):
+     def __init__(self, enemy_name, health, power, loot):
+          self.enemy_name = enemy_name
           self.health = health
           self.power = power 
+          self.loot = loot
+          self.is_alive = True
 
-     def attacking(self):
+     def check_status(self):
+          if self.health >= 0:
+               print(f"{self.enemy_name} has been vanquished")
+               self.is_alive = False
+               self.items_dropped()
+          if self.health > 0:
+               print(f"{self.enemy_name} has {self.health} hearts left")
+                
+
+     def attacking(self, main_player):
         hitormiss = random.randint(1,2)
         if hitormiss == 1:
-            print("The enemy has missed their attack")
+            print(f"{self.enemy_name} has missed their attack")
         if hitormiss == 2:
-            print("Enemy has hit their shot")
+            print(f"{self.enemy_name} has hit the {main_player} for {self.power} damage")
+                       
+    
+     def damage_taken(self, attack_dmg):
+          self.health = self.health - attack_dmg
+          self.check_status()
+
+     def items_dropped(self, loot_options):
+          self.loot = random.choice(loot_options)
+          print(f"Congratulations You Have Acquired The {self.loot} Item")
+         
 class Item:    
      def __init__(self, health, power, value):
           self.health = health
