@@ -79,7 +79,7 @@ class Enemy:
           self.health -= attack_damage
           self.check_status()
 
-     def items_dropped(self, loot):
+     def items_dropped(self):
           loot = random.choice(self.loot_options)
           print(f"Congratulations You Have Acquired The {loot} Item")
 
@@ -105,13 +105,13 @@ class Knight(Enemy):
 
 class Noble(Enemy):
      def __init__(self, enemy_name, health, power, loot_options):
-          super().__init__("Noble", 200, 40, None)
+          super().__init__("Noble", 200, 40, "Nothing")
 
 class King(Enemy):
      def __init__(self, enemy_name, health, power, loot_options):
           super().__init__(King, 3000, 300, ["Crown", "Royal Mantle"])
     
-     def items_dropped(self, loot):
+     def items_dropped(self):
           self.endgame()
           return super().items_dropped(loot)
      
