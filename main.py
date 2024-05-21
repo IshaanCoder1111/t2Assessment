@@ -49,7 +49,18 @@ def nameselection():
             time.sleep(1.5)
     clear()
 
+class Enemy:
+     
+     def __init__(self, health, power):
+          self.health = health
+          self.power = power 
 
+     def attacking(self):
+        hitormiss = random.randint(1,2)
+        if hitormiss == 1:
+            print("The enemy has missed their attack")
+        if hitormiss == 2:
+            print("Enemy has hit their shot")
 class Item:    
      def __init__(self, health, power, value):
           self.health = health
