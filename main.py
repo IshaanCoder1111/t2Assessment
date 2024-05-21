@@ -113,7 +113,7 @@ class King(Enemy):
     
      def items_dropped(self):
           self.endgame()
-          return super().items_dropped(loot)
+          return super().items_dropped()
      
      def endgame():
           clear()
