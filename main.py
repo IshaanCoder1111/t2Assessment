@@ -105,7 +105,7 @@ class Knight(Enemy):
 
 class Noble(Enemy):
      def __init__(self, enemy_name, health, power, loot_options):
-          super().__init__("Noble", 200, 40, "Nothing")
+          super().__init__("Noble", 200, 40, None)
 
 class King(Enemy):
      def __init__(self, enemy_name, health, power, loot_options):
