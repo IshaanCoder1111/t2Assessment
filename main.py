@@ -50,8 +50,11 @@ def nameselection():
     clear()
 
 
-class Item:
-    def __init__
+class Item:    
+     def __init__(self, health, power, value):
+          self.health = health
+          self.power = power
+          self.value = value
 
 
 item1 - Item()
