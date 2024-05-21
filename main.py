@@ -51,11 +51,11 @@ def nameselection():
 
 class Enemy:
      
-     def __init__(self, enemy_name, health, power, loot):
+     def __init__(self, enemy_name, health, power, loot_options):
           self.enemy_name = enemy_name
           self.health = health
           self.power = power 
-          self.loot = loot
+          self.loot_options = loot_options
           self.is_alive = True
 
      def check_status(self):
@@ -75,13 +75,51 @@ class Enemy:
             print(f"{self.enemy_name} has hit the {main_player} for {self.power} damage")
                        
     
-     def damage_taken(self, attack_dmg):
-          self.health = self.health - attack_dmg
+     def damage_taken(self, attack_damage):
+          self.health -= attack_damage
           self.check_status()
 
-     def items_dropped(self, loot_options):
-          self.loot = random.choice(loot_options)
-          print(f"Congratulations You Have Acquired The {self.loot} Item")
+     def items_dropped(self, loot):
+          loot = random.choice(self.loot_options)
+          print(f"Congratulations You Have Acquired The {loot} Item")
+
+
+class Tiger(Enemy):    
+     def __init__(self, enemy_name, health, power, loot_options):
+          super().__init__("Tiger", 30, 10, ["Nothing", "Meat", "Double Meat"])
+
+
+class Bear(Enemy):
+     def __init__(self, enemy_name, health, power, loot_options):
+          super().__init__(Bear, 20, 5, ["Nothing", "Meat"])
+
+class Citizen(Enemy):
+     def __init__(self, enemy_name, health, power, loot_options):
+          citizen_names = ["Jack", "Fred", "Amelia"]
+          enemy_name = random.choice(citizen_names)
+          super().__init__(enemy_name, 10, 5, ["Bread", "Vegetables", "$1", "$2", "Nothing"])       
+
+class Knight(Enemy):
+     def __init__(self, enemy_name, health, power, loot_options):
+          super().__init__(Knight, 80, 15, None)
+
+class Noble(Enemy):
+     def __init__(self, enemy_name, health, power, loot_options):
+          super().__init__("Noble", 200, 40, "Nothing")
+
+class King(Enemy):
+     def __init__(self, enemy_name, health, power, loot_options):
+          super().__init__(King, 3000, 300, ["Crown", "Royal Mantle"])
+    
+     def items_dropped(self, loot):
+          self.endgame()
+          return super().items_dropped(loot)
+     
+     def endgame():
+          clear()
+          print("Placeholder For Finishing Game")
+          input("Press Any Key To Continue")
+          exit()
          
 class Item:    
      def __init__(self, health, power, value):
