@@ -247,13 +247,3 @@ while True:
      inventory.append("Knife")
      print(f"You are in the game {namechosen}")
      print(f"Your inventory consists of a " + ', '.join(inventory))    
-
-
-
-
-
-
-     
-     
-
-
