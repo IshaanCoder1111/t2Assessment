@@ -96,7 +96,7 @@ class WorldMap:
 Village_hut = Area("Village_hut","Your home.",[(2,2)])
 Village = Area("Village","The home of the villagers.",[(2,3),(3,2),(3,3)])
 Ocean = Area("Ocean","Enter with the risk of death.",[(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(18,1),(18,2),(18,3),(18,4),(18,5),(18,6),(18,7),(18,8),(18,9),(18,10),(18,11),(18,12),(18,13),(18,14),(18,15),(18,16),(18,17),(18,18),(18,19)])
-Castle = Area("Castke","King's home.",[(2,3),(3,2),(3,3)])
+Castle = Area("Castle","King's home.",[(2,3),(3,2),(3,3)])
 Merchant_farm = Area("Merchant_farm","The farm of resources.",[(10,8),(10,9),(10,10),(10,11),(11,8),(11,9),(11,10),(11,11),(12,8),(12,9),(12,10),(12,11),(13,8),(13,9),(13,10),(13,11)])
 Forest = Area("Forest","Enter at your own risk.",[(2,3),(3,2),(3,3)])
 Estate = Area("Estate","Home of the nobles.",[(2,3),(3,2),(3,3)])
@@ -120,8 +120,14 @@ class Character:
           self.power += Item.power
           self.hunger -= Item.hunger
           self.stamina += Item.stamina
-                
+     
+     def movement(self):
+          self.stamina -= 3
+          self.hunger += 3
+               
      def attacking(self):
+          self.stamina -= 3
+          self.hunger += 3
           hitormiss2 = random.randint(1,2)
           if hitormiss2 == 1:
             print(f"{namechosen} has missed their attack")
@@ -141,7 +147,6 @@ class Character:
           if self.health > 0:
                print(f"{namechosen} has {self.health} hearts left")
      
-
 
 class Item:
     def __init__(self, power, stamina, hunger, value, health):
@@ -171,10 +176,10 @@ class Coin(Item):
           super().__init__(0, 0, 0, 1, 0)   
           Character.money += self.value     
 
-class Vegetables(Item):
+class Vegetable(Item):
      def __init__(self, power, stamina, hunger, value, health):
           super().__init__(0, 5 , -3, 0, 2)
-          Character.consuming(Vegetables)
+          Character.consuming(Vegetable)
 
 class Jewellery(Item):
      def __init__(self, power, stamina, hunger, value, health):
@@ -236,11 +241,11 @@ class Enemy:
           loot = random.choice(self.loot_options)
           input(f"Congratulations You Have Acquired The {loot} Item, press any key to continue")
           if loot == "Meat":
-               Meat()
+               inventory_function("Meat")             
           if loot == "Vegetable":
-               Vegetables()
+               inventory_function("Vegetable")              
           if loot == "Bread":
-               Bread()
+               inventory_function("Bread")
           if loot == "Coin":
                Coin()
           if loot == "Sword":
@@ -249,8 +254,6 @@ class Enemy:
           if loot == "Armour":
                Armour()
                inventory_function()
-          
-
 
 class Tiger(Enemy):    
      def __init__(self, enemy_name, health, power, loot_options):
@@ -284,9 +287,10 @@ class King(Enemy):
           return super().items_dropped()
      
 
-
 while True:
      inventory = []
      inventory.append("Knife")
      print(f"You are in the game {namechosen}")
      print(f"Your inventory consists of a " + ', '.join(inventory))    
+     Knife()
+     Character.movement()
