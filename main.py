@@ -127,7 +127,7 @@ class Character:
             print(f"{namechosen} has missed their attack")
           if hitormiss2 == 2:
                print(f"{namechosen} has hit the {Enemy.enemy_name} for {self.power} damage")
-               Enemy.damage_taken()
+               Enemy.damage_taken(self.power)
 
      def damage_taken(self):
           self.health -= Enemy.power
@@ -142,6 +142,7 @@ class Character:
                print(f"{namechosen} has {self.health} hearts left")
      
 
+
 class Item:
     def __init__(self, power, stamina, hunger, value, health):
         self.power = power
@@ -153,17 +154,17 @@ class Item:
 class Bread(Item):
      def __init__(self, power, stamina, hunger, value, health):
           super().__init__(2, 2, -3, 0, 1)
-          Character.consuming()
+          Character.consuming(Bread)
 
 class Meat(Item):
      def __init__(self, power, stamina, hunger, value, health):
           super().__init__(2, 2, -5, 0, 2)
-          Character.consuming()
+          Character.consuming(Meat)
 
 class Knife(Item):
      def __init__(self, power, stamina, hunger, value, health):
           super().__init__(20, 0, 0, 5, 0)
-          Character.consuming()
+          Character.consuming(Knife)
 
 class Coin(Item):
      def __init__(self, power, stamina, hunger, value, health):
@@ -173,7 +174,7 @@ class Coin(Item):
 class Vegetables(Item):
      def __init__(self, power, stamina, hunger, value, health):
           super().__init__(0, 5 , -3, 0, 2)
-          Character.consuming()
+          Character.consuming(Vegetables)
 
 class Jewellery(Item):
      def __init__(self, power, stamina, hunger, value, health):
@@ -199,7 +200,7 @@ class Armour(Item):
 class Sword(Item):
      def __init__(self, power, stamina, hunger, value, health):
           super().__init__(50, 0, 0, 0, 0)
-          Character.consuming()
+          Character.consuming(Sword)
 
 class Enemy:
      
@@ -224,7 +225,7 @@ class Enemy:
             print(f"{self.enemy_name} has missed their attack")
         if hitormiss == 2:
             print(f"{self.enemy_name} has hit the {namechosen} for {self.power} damage")
-            Character.damage_taken()
+            Character.damage_taken(self.power)
                        
      def damage_taken(self):
           self.health -= Character.power
@@ -249,6 +250,7 @@ class Enemy:
                Armour()
                inventory_function()
           
+
 
 class Tiger(Enemy):    
      def __init__(self, enemy_name, health, power, loot_options):
