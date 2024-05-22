@@ -63,6 +63,47 @@ def inventory_function():
      inventory.append(loot)
      print(f"Your inventory consists of a " + ', '.join(inventory))   
 
+class Cell:
+    def __init__(self):
+        self.area = None
+
+class Area:
+    def __init__(self,name,description,coordinates):
+        self.name = name
+        self.description = description
+        self.coordinates = coordinates
+
+    def insidearea(self, x, y):
+        return (x, y) in self.coordinates
+
+
+class WorldMap:
+    def __init__(self,width,height):
+        self.width = width
+        self.height = height
+        self.grid = [[Cell() for _ in range(width)]for _ in range(height)]
+
+    def add_area(self, area):
+        for x, y in area.coordinates:
+            if 0 < x < self.width and 0 < y < self.height:
+                self.grid[y][x].area = area
+
+    def get_cell(self, x, y):
+        if 0 < x < self.width and 0 < y < self.height:
+            return self.grid[y][x]
+        return None
+
+Village_hut = Area("Village_hut","Your home.",[(2,2)])
+Village = Area("Village","The home of the villagers.",[(2,3),(3,2),(3,3)])
+Ocean = Area("Ocean","Enter with the risk of death.",[(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(18,1),(18,2),(18,3),(18,4),(18,5),(18,6),(18,7),(18,8),(18,9),(18,10),(18,11),(18,12),(18,13),(18,14),(18,15),(18,16),(18,17),(18,18),(18,19)])
+Castle = Area("Castke","King's home.",[(2,3),(3,2),(3,3)])
+Merchant_farm = Area("Merchant_farm","The farm of resources.",[(10,8),(10,9),(10,10),(10,11),(11,8),(11,9),(11,10),(11,11),(12,8),(12,9),(12,10),(12,11),(13,8),(13,9),(13,10),(13,11)])
+Forest = Area("Forest","Enter at your own risk.",[(2,3),(3,2),(3,3)])
+Estate = Area("Estate","Home of the nobles.",[(2,3),(3,2),(3,3)])
+
+world_map = WorldMap(18,19)
+
+
 class Character:
 
      def __init__(self, power, stamina, health, money, max_health, is_alive):
