@@ -129,6 +129,37 @@ class Entity:
           self.is_alive = is_alive
           self.power = power
 
+class Player:
+     def __init__(self, x_start, y_start,world_map)
+          self.x = x_start
+          self.y = y_start
+          self.world_map = world_map
+    
+     def movement(self, direction):
+        directions = {
+            "north": (0, 1),
+            "south": (0, -1),
+            "east": (1, 0),
+            "west": (-1, 0)
+        }
+        if direction in directions:
+             move_x, move_y = directions[direction]
+             x_change, y_change = self.x + move_x, self.y + move_y
+             if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
+                  self.x, self.y = x_change, y_change
+                  cell = self.world_map.get_cell(self.x, self.y)
+                  if cell.is_empty():
+                    print("You move into an empty space.")
+                  else:
+                    print(f"You move {direction} to the {area.name}.") #needs fixing
+             else:
+                print("You can't go that way.")
+        else:
+            print("Invalid direction.")
+                  
+
+             
+
 class Character(Entity):
      def __init__(self, health, is_alive, power, stamina, hunger, money, max_health):
           super().__init__(health, is_alive, power)
