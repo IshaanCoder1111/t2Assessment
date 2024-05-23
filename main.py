@@ -93,7 +93,7 @@ class WorldMap:
             return self.grid[y][x]
         return None
 
-Village_hut = Area("Village_hut","Your home.",[(2,2)])
+Hut_village = Area("Village_hut","Your home.",[(2,2)])
 Village = Area("Village","The home of the villagers.",[(2,3),(2,4),(2,5),(2,6),(2,7),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7)]) 
 Ocean = Area("Ocean","Enter with the risk of death.",[(x, 1) for x in range(18)] + [(x, 18) for x in range(18)] + [(1, y) for y in range(1, 18)] + [(17, y) for y in range(1, 18)])
 Castle = Area("Castle","King's home.",[(8,10),(8,11),(8,12),(8,13),(9,10),(9,11),(9,12),(9,13),(10,10),(10,11),(10,12),(10,13),(11,10),(11,11),(11,12),(11,13)]) 
@@ -103,7 +103,7 @@ Estate = Area("Estate","Home of the nobles.",[(16,13),(16,14),(16,15),(16,16),(1
 
 world_map = WorldMap(19,18)
 
-world_map.add_area(Village_hut)
+world_map.add_area(Hut_village)
 world_map.add_area(Village)
 world_map.add_area(Ocean)
 world_map.add_area(Castle)
