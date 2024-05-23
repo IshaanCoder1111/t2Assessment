@@ -93,7 +93,7 @@ class WorldMap:
             return self.grid[y][x]
         return None
 
-Hut_village = Area("Village_hut","Your home.",[(2,2)])
+Hut_village = Area("Hut","Your home.",[(2,2)])
 Village = Area("Village","The home of the villagers.",[(2,3),(2,4),(2,5),(2,6),(2,7),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7)]) 
 Ocean = Area("Ocean","Enter with the risk of death.",[(x, 1) for x in range(18)] + [(x, 18) for x in range(18)] + [(1, y) for y in range(1, 18)] + [(17, y) for y in range(1, 18)])
 Castle = Area("Castle","King's home.",[(8,10),(8,11),(8,12),(8,13),(9,10),(9,11),(9,12),(9,13),(10,10),(10,11),(10,12),(10,13),(11,10),(11,11),(11,12),(11,13)]) 
@@ -101,7 +101,7 @@ Merchant_farm = Area("Merchant_farm","The farm of resources.",[(11,2),(12,2),(13
 Forest = Area("Forest","Enter at your own risk.",[(2,15),(2,16),(2,17),(3,15),(3,16),(3,17),(4,15),(4,16),(4,17),(5,15),(5,16),(5,17)]) 
 Estate = Area("Estate","Home of the nobles.",[(16,13),(16,14),(16,15),(16,16),(16,17),(17,13),(17,14),(17,15),(17,16),(17,17),(18,13),(18,14),(18,15),(18,16),(18,17)]) 
 
-world_map = WorldMap(19,18)
+world_map = WorldMap(20,19)
 
 world_map.add_area(Hut_village)
 world_map.add_area(Village)
@@ -118,10 +118,11 @@ def print_world_map(world_map):
             if cell and cell.area:
                 print(cell.area.name[0], end=' ')
             else:
-                print('.', end=' ')
+                print('o', end=' ')
         print()
 
 print_world_map(world_map)
+
 class Character:
 
      def __init__(self, power, stamina, health, money, max_health, is_alive):
