@@ -118,7 +118,7 @@ def print_world_map(world_map):
             if cell and cell.area:
                 print(cell.area.name[0], end=' ')
             else:
-                print('o', end=' ')
+                print('.', end=' ')
         print()
 
 print_world_map(world_map)
