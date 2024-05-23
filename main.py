@@ -85,17 +85,17 @@ class WorldMap:
 
     def add_area(self, area):
         for x, y in area.coordinates:
-            if 0 < x < self.width and 0 < y < self.height:
+            if 0 <= x < self.width and 0 <= y < self.height:
                 self.grid[y][x].area = area
 
     def get_cell(self, x, y):
-        if 0 < x < self.width and 0 < y < self.height:
+        if 0 <= x < self.width and 0 <= y < self.height:
             return self.grid[y][x]
         return None
 
 Village_hut = Area("Village_hut","Your home.",[(2,2)])
 Village = Area("Village","The home of the villagers.",[(2,3),(2,4),(2,5),(2,6),(2,7),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7)]) 
-Ocean = Area("Ocean","Enter with the risk of death.",[(x, 1) for x in range(18)] + [(x, 18) for x in range(18)] + [(1, y) for y in range(1, 18)] + [(17, y) for y in range(1, 18)])#not finished
+Ocean = Area("Ocean","Enter with the risk of death.",[(x, 1) for x in range(18)] + [(x, 18) for x in range(18)] + [(1, y) for y in range(1, 18)] + [(17, y) for y in range(1, 18)])
 Castle = Area("Castle","King's home.",[(8,10),(8,11),(8,12),(8,13),(9,10),(9,11),(9,12),(9,13),(10,10),(10,11),(10,12),(10,13),(11,10),(11,11),(11,12),(11,13)]) 
 Merchant_farm = Area("Merchant_farm","The farm of resources.",[(11,2),(12,2),(13,2),(14,2),(15,2),(16,2),(17,2),(18,2),(11,3),(12,3),(13,3),(14,3),(15,3),(16,3),(17,3),(18,3),(11,4),(12,4),(13,4),(14,4),(15,4),(16,4),(17,4),(18,4),(11,5),(12,5),(13,5),(14,5),(15,5),(16,5),(17,5),(18,5)]) 
 Forest = Area("Forest","Enter at your own risk.",[(2,15),(2,16),(2,17),(3,15),(3,16),(3,17),(4,15),(4,16),(4,17),(5,15),(5,16),(5,17)]) 
@@ -121,7 +121,7 @@ def print_world_map(world_map):
                 print('.', end=' ')
         print()
 
-
+print_world_map(world_map)
 class Character:
 
      def __init__(self, power, stamina, health, money, max_health, is_alive):
@@ -312,3 +312,4 @@ while True:
      print(f"Your inventory consists of a " + ', '.join(inventory))    
      Knife()
      Character.movement()
+
