@@ -137,7 +137,7 @@ class Entity:
           self.power = power
 
 class Player:
-     def __init__(self, x_start, y_start,world_map)
+     def __init__(self, x_start, y_start,world_map):
           self.x = x_start
           self.y = y_start
           self.world_map = world_map
