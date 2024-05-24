@@ -155,10 +155,10 @@ class Player:
              if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
                   self.x, self.y = x_change, y_change
                   cell = self.world_map.get_cell(self.x, self.y)
-                  if cell.is_empty():
-                    print("You move into an empty space.")
+                  if cell:
+                    print(f"You move {direction} to the {cell.name}.") #needs fixing
                   else:
-                    print(f"You move {direction} to the {area.name}.") #needs fixing
+                    print("You move into an empty space.")
              else:
                 print("You can't go that way.")
         else:
