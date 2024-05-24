@@ -111,6 +111,13 @@ world_map.add_area(Merchant_farm)
 world_map.add_area(Forest)
 world_map.add_area(Estate)
 
+barren_land = [(x, y) for y in range(world_map.height) for x in range(world_map.width) if world_map.get_cell(x, y).area is None]
+
+randomised_items = ["Vegetable", "Bread", "Coin"]
+for x, y in barren_land:
+    item_choice = random.choice()
+    world_map.get_cell(x, y).randomised_items.append(item_choice)
+
 def print_world_map(world_map):
     for y in range(world_map.height):
         for x in range(world_map.width):
