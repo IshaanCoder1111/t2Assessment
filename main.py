@@ -117,8 +117,9 @@ barren_land = [(x, y) for y in range(world_map.height) for x in range(world_map.
 
 randomised_items = ["Vegetable", "Bread", "Coin"]
 for x, y in barren_land:
-    item_choice = random.choice()
-    world_map.get_cell(x, y).randomised_items.append(item_choice)
+    item_choice = random.choice(randomised_items)
+    world_map.get_cell(x, y)
+    randomised_items.append(item_choice)
 
 def print_world_map(world_map):
     for y in range(world_map.height):
@@ -260,7 +261,7 @@ class Enemy(Entity):
 tiger = Enemy(health=random.randint(25, 35), is_alive=True, power=10, enemy_name="Tiger", loot_options=["Nothing", "Meat"])
 bear = Enemy(health=random.randint(15,25), is_alive=True, power=5, loot_options=["Nothing", "Meat"])
 citizen_names = ["Jack", "Fred", "Amelia"]
-citizen = Enemy(health=5, is_alive=True, is_alive = True, power=5, enemy_name= random.choice(citizen_names), loot_options=["Bread", "Vegetables", "Coin", "Nothing"])
+citizen = Enemy(health=5, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["Bread", "Vegetables", "Coin", "Nothing"])
 knight = Enemy(health=80, is_alive=True, power=15, enemy_name="Knight", loot_options=["Armour", "Sword", "Helmet"])
 noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["Land"])
 king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["Crown", "Royal Mantle"])
