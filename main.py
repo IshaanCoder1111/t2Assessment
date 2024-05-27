@@ -293,9 +293,14 @@ def dametime():
           Character.movement(direction=input("Where do you want to move?"))
 
 def options():
-    ricky = input("Please type in one of the following commands: ")
-    if ricky == "showmap":
-        print_world_map(world_map)
+    while True:
+        ricky = input("Please type in one of the following commands: ")
+        if ricky == "showmap":
+            print_world_map(world_map)
+        else:
+            print("You cannot request this command. Please try again.")
+            time.sleep(3)
+            os.system('cls')
      
 
 #Gameplay
