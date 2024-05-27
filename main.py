@@ -139,45 +139,19 @@ class Entity:
           self.health = health
           self.is_alive = is_alive
           self.power = power
-
-class Player:
-     def __init__(self, x_start, y_start,world_map):
-          self.x = x_start
-          self.y = y_start
-          self.world_map = world_map
-    
-     def movement(self, direction):
-        directions = {
-            "north": (0, -1),
-            "south": (0, 1),
-            "east": (1, 0),
-            "west": (-1, 0)
-        }
-        if direction in directions:
-             move_x, move_y = directions[direction]
-             x_change, y_change = self.x + move_x, self.y + move_y
-             if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
-                  self.x, self.y = x_change, y_change
-                  cell = self.world_map.get_cell(self.x, self.y)
-                  if cell:
-                    print(f"You move {direction} to the {cell.name}.") #needs fixing
-                  else:
-                    print("You move into an empty space.")
-             else:
-                print("You can't go that way.")
-        else:
-            print("Invalid direction.")
                   
-
-             
+         
 
 class Character(Entity):
-     def __init__(self, health, is_alive, power, stamina, hunger, money, max_health):
+     def __init__(self, health, is_alive, power, stamina, hunger, money, max_health, x_start, y_start, world_map):
           super().__init__(health, is_alive, power)
           self.stamina = stamina
           self.hunger = hunger
           self.money = money
           self.max_health = max_health
+          self.x = x_start
+          self.y = y_start
+          self.world_map = world_map
 
      def consuming(self, item):
           self.health += item.health
@@ -185,13 +159,30 @@ class Character(Entity):
           self.hunger -= item.hunger
           self.stamina += item.stamina
      
-     def movement(self):
+     def movement(self, direction):
           self.stamina -= 3
           self.hunger += 3
-          userinput_move = input("Where do you want to move?")
-          if "north" in userinput_move.lower():
+          directions = {
+            "north": (0, -1),
+            "south": (0, 1),
+            "east": (1, 0),
+            "west": (-1, 0)
+                    }   
+          if directions in directions:
+               move_x, move_y = directions[direction]
+               x_change, y_change = self.x + move_x, self.y + move_y
+               if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
+                    self.x, self.y = x_change, y_change
+                    cell = self.world_map.get_cell(self.x, self.y)
+                    if cell:
+                         print(f"You move {direction} to the {cell.name}.") #needs fixing
+                    else:
+                         print("You move into an empty space.")
+               else:
+                    print("You can't go that way.")
+          else:
+               print("Invalid direction.")
                
-                  
      def attacking(self):
           self.stamina -= 3
           self.hunger += 3
@@ -295,9 +286,10 @@ medicine = Item(0, 0, 0, 8, 20)
 oil = Item(0, 0, 0, 3, 0)
 sword = Item(50, 0, 0, 15, 0)
 
-
-while True:
-     
-     print(f"You are in the game {namechosen}")
-     print(f"Your inventory consists of a " + ', '.join(inventory))    
-     Character.consuming(item=knife)
+#Gameplay
+def dametime():
+     while True:          
+          print(f"You are in the game {namechosen}")
+          print(f"Your inventory consists of a " + ', '.join(inventory))    
+          Character.consuming(item=knife)
+          Character.movement(direction=input("Where do you want to move?"))
