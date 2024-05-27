@@ -1,5 +1,7 @@
 import os, time, random
 
+inventory = []
+
 #Adding a clear function
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
@@ -77,7 +79,6 @@ class Area:
 
     def insidearea(self, x, y):
         return (x, y) in self.coordinates
-
 
 class WorldMap:
     def __init__(self,width,height):
@@ -187,7 +188,10 @@ class Character(Entity):
      def movement(self):
           self.stamina -= 3
           self.hunger += 3
+          userinput_move = input("Where do you want to move?")
+          if "north" in userinput_move.lower():
                
+                  
      def attacking(self):
           self.stamina -= 3
           self.hunger += 3
@@ -293,8 +297,7 @@ sword = Item(50, 0, 0, 15, 0)
 
 
 while True:
-     inventory = []
-     inventory.append("Knife")
+     
      print(f"You are in the game {namechosen}")
      print(f"Your inventory consists of a " + ', '.join(inventory))    
      Character.consuming(item=knife)
