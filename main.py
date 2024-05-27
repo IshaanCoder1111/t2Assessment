@@ -132,8 +132,6 @@ def print_world_map(world_map):
                 print('.', end=' ')
         print()
 
-print_world_map(world_map)
-
 class Entity:
      def __init__(self, health, is_alive, power):
           self.health = health
@@ -254,7 +252,7 @@ class Enemy(Entity):
 
 
 tiger = Enemy(health=random.randint(25, 35), is_alive=True, power=10, enemy_name="Tiger", loot_options=["Nothing", "Meat"])
-bear = Enemy(health=random.randint(15,25), is_alive=True, power=5, loot_options=["Nothing", "Meat"])
+bear = Enemy(health=random.randint(15,25), is_alive=True, power=5, enemy_name="bear", loot_options=["Nothing", "Meat"])
 citizen_names = ["Jack", "Fred", "Amelia"]
 citizen = Enemy(health=5, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["Bread", "Vegetables", "Coin", "Nothing"])
 knight = Enemy(health=80, is_alive=True, power=15, enemy_name="Knight", loot_options=["Armour", "Sword", "Helmet"])
@@ -293,3 +291,14 @@ def dametime():
           print(f"Your inventory consists of a " + ', '.join(inventory))    
           Character.consuming(item=knife)
           Character.movement(direction=input("Where do you want to move?"))
+
+def options():
+    ricky = input("Please type in one of the following commands: ")
+    if ricky == "showmap":
+        print_world_map(world_map)
+     
+
+#Gameplay
+startermenu()
+nameselection()
+options()
