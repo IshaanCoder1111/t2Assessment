@@ -114,7 +114,11 @@ world_map.add_area(Forest)
 world_map.add_area(Estate)
 
 barren_land = [(x, y) for y in range(world_map.height) for x in range(world_map.width) if world_map.get_cell(x, y).area is None]
-
+for x, y in barren_land:
+          randomised_items = ["Vegetable", "Bread", "Coin"]
+          item_choice = random.choice(randomised_items)
+          world_map.get_cell(x, y)
+          randomised_items.append(item_choice)
 
 def print_world_map(world_map):
     for y in range(world_map.height):
@@ -168,10 +172,11 @@ class Character(Entity):
                     if cell:
                          if cell.area == Ocean:
                               print("You have entered the ocean and died")
-                              endgame()
-                         print(f"You move {direction} to the {cell.name}.") #needs fixing
-                    else:
-                         print("You move into an empty space.")
+                              endgame():
+                         print(f"You move {direction} to the {cell.name} and encountered a {Area.areaitems}.") #needs fixing
+                    if cell == barren_land:
+                         print("You have entered barren land and collected {} ")
+                         
                else:
                     print("You can't go that way.")
           else:
@@ -278,22 +283,18 @@ medicine = Item(0, 0, 0, 8, 20)
 oil = Item(0, 0, 0, 3, 0)
 sword = Item(50, 0, 0, 15, 0)
 
+
+
+
 #Gameplay
-def dametime():
-     while True:          
+def dametime():         
           print(f"You are in the game {namechosen}")
           print(f"Your inventory consists of a " + ', '.join(inventory))    
           Character.consuming(item=knife)
-          Character.movement(direction=input("Where do you want to move?"))       
-          for x, y in barren_land:
-               randomised_items = ["Vegetable", "Bread", "Coin"]
-               item_choice = random.choice(randomised_items)
-               world_map.get_cell(x, y)
-               randomised_items.append(item_choice)
-
-
+          while True: 
+               Character.movement(direction=input("Where do you want to move?"))       
+               
      
-
 def options():
     while True:
         ricky = input("Please type in one of the following commands: ")
@@ -303,5 +304,3 @@ def options():
             print("You cannot request this command. Please try again.")
             time.sleep(3)
             clear()
-
-     
