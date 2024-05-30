@@ -19,7 +19,6 @@ def startermenu():
     clear()
     print("Welcome To")
     print("""
-  
         _       _________ _        _______    _______  _______   _________          _______    _______  _______  _______ _________ _        _______ 
         | \    /\\__   __/( (    /|(  ____ \  (  ___  )(  ____ \  \__   __/|\     /|(  ____ \  (  ____ \(  ___  )(  ____ \\__   __/( \      (  ____ \
         |  \  / /   ) (   |  \  ( || (    \/  | (   ) || (    \/     ) (   | )   ( || (    \/  | (    \/| (   ) || (    \/   ) (   | (      | (    \/
@@ -116,11 +115,6 @@ world_map.add_area(Estate)
 
 barren_land = [(x, y) for y in range(world_map.height) for x in range(world_map.width) if world_map.get_cell(x, y).area is None]
 
-randomised_items = ["Vegetable", "Bread", "Coin"]
-for x, y in barren_land:
-    item_choice = random.choice(randomised_items)
-    world_map.get_cell(x, y)
-    randomised_items.append(item_choice)
 
 def print_world_map(world_map):
     for y in range(world_map.height):
@@ -136,8 +130,7 @@ class Entity:
      def __init__(self, health, is_alive, power):
           self.health = health
           self.is_alive = is_alive
-          self.power = power
-                  
+          self.power = power                 
          
 
 class Character(Entity):
@@ -173,6 +166,9 @@ class Character(Entity):
                     self.x, self.y = x_change, y_change
                     cell = self.world_map.get_cell(self.x, self.y)
                     if cell:
+                         if cell.area == Ocean:
+                              print("You have entered the ocean and died")
+                              endgame()
                          print(f"You move {direction} to the {cell.name}.") #needs fixing
                     else:
                          print("You move into an empty space.")
@@ -258,9 +254,7 @@ citizen = Enemy(health=5, is_alive=True, power=5, enemy_name= random.choice(citi
 knight = Enemy(health=80, is_alive=True, power=15, enemy_name="Knight", loot_options=["Armour", "Sword", "Helmet"])
 noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["Land"])
 king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["Crown", "Royal Mantle"])
-
-
-     
+    
      
 
 class Item:
@@ -290,7 +284,15 @@ def dametime():
           print(f"You are in the game {namechosen}")
           print(f"Your inventory consists of a " + ', '.join(inventory))    
           Character.consuming(item=knife)
-          Character.movement(direction=input("Where do you want to move?"))
+          Character.movement(direction=input("Where do you want to move?"))       
+          for x, y in barren_land:
+               randomised_items = ["Vegetable", "Bread", "Coin"]
+               item_choice = random.choice(randomised_items)
+               world_map.get_cell(x, y)
+               randomised_items.append(item_choice)
+
+
+     
 
 def options():
     while True:
@@ -300,10 +302,6 @@ def options():
         else:
             print("You cannot request this command. Please try again.")
             time.sleep(3)
-            os.system('cls')
-     
+            clear()
 
-#Gameplay
-startermenu()
-nameselection()
-options()
+     
