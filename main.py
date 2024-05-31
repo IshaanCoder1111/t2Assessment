@@ -104,7 +104,7 @@ Castle = Area("Castle","King's home.",[(8,10),(8,11),(8,12),(8,13),(9,10),(9,11)
 Merchant_farm = Area("Merchant_farm","The farm of resources.",[(11,2),(12,2),(13,2),(14,2),(15,2),(16,2),(17,2),(18,2),(11,3),(12,3),(13,3),(14,3),(15,3),(16,3),(17,3),(18,3),(11,4),(12,4),(13,4),(14,4),(15,4),(16,4),(17,4),(18,4),(11,1),(12,1),(13,1),(14,1),(15,1),(16,1),(17,1),(18,1)],["Jewellery","Wine_glass","Oil","Medicine","Wine"],["Merchant"]) 
 Forest = Area("Forest","Enter at your own risk.",[(2,15),(2,16),(2,17),(3,15),(3,16),(3,17),(4,15),(4,16),(4,17),(1,15),(1,16),(1,17)],["Nothing"],["Animal"]) 
 Estate = Area("Estate","Home of the nobles.",[(16,13),(16,14),(16,15),(16,16),(16,17),(17,13),(17,14),(17,15),(17,16),(17,17),(18,13),(18,14),(18,15),(18,16),(18,17)],["Key","Land"],["Noble","Knights"]) 
-Barren_land = Area("Barren Land", "Just Barren Land.", [(x, y) for y in range(world_map.height) for x in range(world_map.width) if world_map.get_cell(x, y).area is None], [] , ["Citizens"])
+Barren_land = Area("Barren Land", "Just Barren Land.", [(x, y) for y in range(world_map.height) for x in range(world_map.width) if world_map.get_cell(x, y).area is None], [] , ["Citizens", "Animal"])
 
 randomised_items = ["Vegetable", "Bread", "Coin"]
 for x, y in Barren_land.coordinates:
@@ -120,7 +120,6 @@ world_map.add_area(Merchant_farm)
 world_map.add_area(Forest)
 world_map.add_area(Estate)
 
-barren_land = [(x, y) for y in range(world_map.height) for x in range(world_map.width) if world_map.get_cell(x, y).area is None]
 
 
 def print_world_map(world_map):
@@ -176,8 +175,9 @@ class Character(Entity):
                          if cell.area == Ocean:
                               print("You have entered the ocean and died")
                               endgame():
-                         print(f"You move {direction} to the {cell.name} and encountered a {Area.areaitems}.") #needs fixing
-                    if cell == barren_land:
+                         if cell.area == Estate:
+                              print(f"You move {direction} to the Estate and encountered a {Area.areaitems}.") #needs fixing
+                    if cell == Barren_land:
                          print("You have entered barren land and collected {} ")
                          
                else:
@@ -285,7 +285,6 @@ wine_Glass = Item(0, 0, 0, 5, 0)
 medicine = Item(0, 0, 0, 8, 20)
 oil = Item(0, 0, 0, 3, 0)
 sword = Item(50, 0, 0, 15, 0)
-
 
 
 
