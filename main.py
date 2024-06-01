@@ -29,7 +29,7 @@ def startermenu():
         |_/    \/\_______/|/    )_)(_______)  (_______)|/            )_(   |/     \|(_______/  (_______/|/     \|\_______)   )_(   (_______/(_______/
                                                                                                                                                                
           """)
-    input("Press Any Key To Continue!")
+    input("Press Enter To Continue!: ")
     clear()
 
 def nameselection():
@@ -60,8 +60,8 @@ def endgame():
           input("Press Any Key To Continue")
           exit()
 
-def inventory_function():
-     inventory.append(loot)
+def inventory_function(item_received):
+     inventory.append(item_received.lower())
      print(f"Your inventory consists of a " + ', '.join(inventory))   
 
 class Cell:
@@ -151,6 +151,8 @@ class Character(Entity):
           self.world_map = world_map
 
      def consuming(self, item):
+          if item == vegetable or bread or medicine or meat:
+               inventory.remove(item)
           self.health += item.health
           self.power += item.power
           self.hunger -= item.hunger
@@ -177,6 +179,8 @@ class Character(Entity):
                         time.sleep(2)
                         self.is_alive = False
                         endgame()
+                    if (self.x, self.y) == (11,4):
+                         merchant()
                     else:
                         print(f"You move {direction} to the {cell.area.name}.")         
             else:
@@ -265,42 +269,102 @@ king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_opti
      
 
 class Item:
-    def __init__(self, power, stamina, hunger, value, health):
+    def __init__(self, power, stamina, hunger, value, health, name):
         self.power = power
         self.stamina = stamina
         self.hunger = hunger 
         self.value = value
         self.health = health
+        self.name = name
      
 
-bread = Item(2, 2, -3, 0, 1)
-armour = Item(10, 0, 0, 30, 100)
-meat = Item(2, 2, -5, 0, 2)
-coin = Item(0, 0, 0, 1, 0)
-vegetable = Item(0, 5, -3, 0, 2)
-knife = Item(20, 0, 0, 10, 0)
-jewellery = Item(0, 0, 0, 5, 0)
-wine_Glass = Item(0, 0, 0, 5, 0)
-medicine = Item(0, 0, 0, 8, 20)
-oil = Item(0, 0, 0, 3, 0)
-sword = Item(50, 0, 0, 15, 0)
+bread = Item(2, 2, -3, 0, 1, "bread")
+armour = Item(10, 0, 0, 30, 100, "armour")
+meat = Item(2, 2, -5, 0, 2, "meat")
+coin = Item(0, 0, 0, 1, 0, "coin")
+vegetable = Item(0, 5, -3, 0, 2, "vegetable")
+knife = Item(20, 0, 0, 10, 0, "knife")
+jewellery = Item(0, 0, 0, 5, 0, "jewellery")
+wineglass = Item(0, 0, 0, 5, 0, "wineglass")
+medicine = Item(0, 0, 0, 8, 20, "medicine")
+oil = Item(0, 0, 0, 3, 0, "oil")
+sword = Item(50, 0, 0, 15, 0, "sword")
 
+def merchant():
+     while True:
+          clear()
+          input("WELCOME TO THE MERCHANT!")
+          character_choicemerchant = input("Would you like to 'buy', 'sell', or 'exit'?")
+          if "sell" in character_choicemerchant.lower():
+               while True:
+                    clear()
+                    print(f"Your inventory consists of a " + ', '.join(inventory))
+                    item_sell = input("What would you like to sell, or would you like to exit selling").strip().lower()
+                    if item_sell in inventory:
+                         inventory.remove(item_sell)
+                         print(f"You have successfully sold the {item_sell}")
+                         print(f"Your inventory currently consists of {inventory}")
+                         input("Press enter to continue: ")
+                         break
+                    elif "exit" in item_sell:
+                         print("Exiting the selling area")
+                         time.sleep(1.5)
+                         break
+                    else:
+                         print(f"You don't currently have {item_sell}")
+                         time.sleep(1.5)
 
+          if "buy" in character_choicemerchant:
+               while True:
+                    print("These are our current items available")
+                    print("Vegetable, Meat, Bread, Medicine")
+                    item_buy = input("Based on these items what would you like to buy, or would you like to exit buying").strip().lower()
+                    if item_buy == "medicine":
+                         inventory_function("medicine")
+                    if item_buy == "vegetable":
+                         inventory_function("vegetable")
+                    if item_buy == "meat":
+                         inventory_function("meat")
+                    if item_buy == "bread":
+                         inventory_function("bread")
+                    elif "exit" in item_buy:
+                         print("Exiting the buying area")
+                         time.sleep(1.5)
+                         break
+                    else:
+                         print(f"{item_buy} is not currently in our store, sorry for the inconvenience")
+
+          if "exit" in item_sell:
+                    print("Exiting the merchant")
+                    time.sleep(1.5)
+                    clear()
+                    movingcharacter()    
+
+          else:
+               print("Thats not an option")  
+               time.sleep(1.5)                       
+                      
+
+     
 
 #Gameplay
 def dametime():         
           print(f"You are in the game {namechosen}")
+          inventory_function("Knife")
           print(f"Your inventory consists of a " + ', '.join(inventory))    
-          character.consuming(item=knife)
+          Character.consuming(item=knife)
+          movingcharacter()
+
+def movingcharacter():
           while character.is_alive == True: 
-               options = input("""Select one of the following commands:
-showmap
-move""")
+               options = input("""Select one of the following commands: 
+                               showmap move""").strip().lower()
+               
                if options == "showmap":
                     print_world_map(world_map,character)
                if options == "move":
                     direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower()
-                    if direction == "exit":
+                    if "exit" in direction:
                          break
                     elif direction in ["north", "south", "east", "west"]:
                          character.movement(direction)
@@ -313,7 +377,3 @@ character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
 startermenu()
 nameselection()
 dametime()
-
-
-
-     
