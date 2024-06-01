@@ -53,9 +53,9 @@ def nameselection():
 
 def endgame():
           clear()
-          if Character.is_alive == True:
+          if character.is_alive == True:
                print("Finished Game")
-          if Character.is_alive == False:
+          if character.is_alive == False:
                print("You Lost")
           input("Press Any Key To Continue")
           exit()
@@ -106,11 +106,6 @@ Forest = Area("Forest","Enter at your own risk.",[(2,15),(2,16),(2,17),(3,15),(3
 Estate = Area("Estate","Home of the nobles.",[(16,13),(16,14),(16,15),(16,16),(16,17),(17,13),(17,14),(17,15),(17,16),(17,17),(18,13),(18,14),(18,15),(18,16),(18,17)],["Key","Land"],["Noble","Knights"]) 
 Barren_land = Area("Barren Land", "Just Barren Land.", [(x, y) for y in range(world_map.height) for x in range(world_map.width) if world_map.get_cell(x, y).area is None], [] , ["Citizens", "Animal"])
 
-randomised_items = ["Vegetable", "Bread", "Coin"]
-for x, y in Barren_land.coordinates:
-    item_choice = random.choice(randomised_items)
-    world_map.get_cell(x, y).items.append(item_choice)
-    Barren_land.items.append(item_choice)
 
 world_map.add_area(Hut_village)
 world_map.add_area(Village)
@@ -122,11 +117,13 @@ world_map.add_area(Estate)
 
 
 
-def print_world_map(world_map):
+def print_world_map(world_map, character):
     for y in range(world_map.height):
         for x in range(world_map.width):
             cell = world_map.get_cell(x, y)
-            if cell and cell.area:
+            if character.x == x and character.y == y:
+                 print("P", end=" ")
+            elif cell and cell.area:
                 print(cell.area.name[0], end=' ')
             else:
                 print('.', end=' ')
@@ -157,33 +154,31 @@ class Character(Entity):
           self.stamina += item.stamina
      
      def movement(self, direction):
-          self.stamina -= 3
-          self.hunger += 3
-          directions = {
+        self.stamina -= 3
+        self.hunger += 3
+        directions = {
             "north": (0, -1),
             "south": (0, 1),
             "east": (1, 0),
             "west": (-1, 0)
-                    }   
-          if directions in directions:
-               move_x, move_y = directions[direction]
-               x_change, y_change = self.x + move_x, self.y + move_y
-               if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
-                    self.x, self.y = x_change, y_change
-                    cell = self.world_map.get_cell(self.x, self.y)
-                    if cell:
-                         if cell.area == Ocean:
-                              print("You have entered the ocean and died")
-                              endgame():
-                         if cell.area == Estate:
-                              print(f"You move {direction} to the Estate and encountered a {Area.areaitems}.") #needs fixing
-                    if cell == Barren_land:
-                         print("You have entered barren land and collected {} ")
-                         
-               else:
-                    print("You can't go that way.")
-          else:
-               print("Invalid direction.")
+        }
+        if direction in directions:
+            move_x, move_y = directions[direction]
+            x_change, y_change = self.x + move_x, self.y + move_y
+            if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
+                self.x, self.y = x_change, y_change
+                cell = self.world_map.get_cell(self.x, self.y)
+                if cell and cell.area:
+                    if cell.area.name == "Ocean":
+                        print("You have entered the ocean and died")
+                        self.is_alive = False
+                        endgame()
+                    else:
+                        print(f"You move {direction} to the {cell.area.name}.")         
+            else:
+                print("You can't go that way.")
+        else:
+            print("Invalid direction.")
                
      def attacking(self):
           self.stamina -= 3
@@ -193,10 +188,10 @@ class Character(Entity):
             print(f"{namechosen} has missed their attack")
           if hitormiss2 == 2:
                print(f"{namechosen} has hit the {Enemy.enemy_name} for {self.power} damage")
-               Enemy.damage_taken(self.power)
+               character.damage_taken(self.power)
 
-     def damage_taken(self):
-          self.health -= Enemy.power
+     def damage_taken(self,damage):
+          self.health -= damage
           self.status_check()
 
      def status_check(self):
@@ -292,19 +287,29 @@ sword = Item(50, 0, 0, 15, 0)
 def dametime():         
           print(f"You are in the game {namechosen}")
           print(f"Your inventory consists of a " + ', '.join(inventory))    
-          Character.consuming(item=knife)
-          while True: 
-               Character.movement(direction=input("Where do you want to move?"))       
+          character.consuming(item=knife)
+          while character.is_alive == True: 
+               options = input("""Select one of the following commands:
+showmap
+move""")
+               if options == "showmap":
+                    print_world_map(world_map,character)
+               if options == "move":
+                    direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower()
+                    if direction == "exit":
+                         break
+                    elif direction in ["north", "south", "east", "west"]:
+                         character.movement(direction)
+                    else:
+                         print("Invalid direction. Please try again.")  
                
-     
-def options():
-    while True:
-        ricky = input("Please type in one of the following commands: ")
-        if ricky == "showmap":
-            print_world_map(world_map)
-        else:
-            print("You cannot request this command. Please try again.")
-            time.sleep(3)
-            clear()
+
+character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
+
+startermenu()
+nameselection()
+dametime()
+
+
 
      
