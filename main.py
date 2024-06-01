@@ -171,6 +171,7 @@ class Character(Entity):
                 if cell and cell.area:
                     if cell.area.name == "Ocean":
                         print("You have entered the ocean and died")
+                        time.sleep(2)
                         self.is_alive = False
                         endgame()
                     else:
