@@ -312,6 +312,15 @@ items_dictionary = {
     "sword": sword
 }
 
+def collect_items_barren_land(character, cell):
+    items_chances = ["coin", "vegetable", "bread", None]  
+    collect_item = random.choice(items_chances)  
+    if collect_item:
+        print(f"You found some {collect_item.upper()} while roaming the land!")
+        inventory_function(collect_item)
+    else:
+        print("There are no items here. Keep on searching!")
+
 def merchant():
      while True:
           clear()
@@ -393,11 +402,12 @@ def movingcharacter():
                          break
                     elif direction in ["north", "south", "east", "west"]:
                          character.movement(direction)
+                         current_cell = world_map.get_cell(character.x, character.y)
+                         if current_cell.area.name == "Barren Land":
+                              collect_items_barren_land(character, current_cell)
                     else:
                          print("Invalid direction. Please try again.")  
                
-
-
 
 startermenu()
 nameselection()
