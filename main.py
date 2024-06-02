@@ -151,12 +151,16 @@ class Character(Entity):
           self.world_map = world_map
 
      def consuming(self, item):
-          if item == vegetable or bread or medicine or meat:
-               inventory.remove(item)
           self.health += item.health
           self.power += item.power
           self.hunger -= item.hunger
           self.stamina += item.stamina
+          if item.name in ["vegetable","meat", "bread", "medicine"]:
+               print(f"The {item} has been removed from your inventory")
+               inventory.remove(item)
+               print(f"Stats after consuming {item.name} Power:{self.power}, Health:{self.health}, Stamina:{self.stamina}, Hunger:{self.hunger}")
+          else:
+               print(f"Stats after obtaining {item.name} Power:{self.power}, Health:{self.health}, Stamina:{self.stamina}, Hunger:{self.hunger}")
      
      def movement(self, direction):
         self.stamina -= 3
@@ -276,6 +280,10 @@ class Item:
         self.value = value
         self.health = health
         self.name = name
+
+    def __str__(self):       
+          return self.name
+          
      
 
 bread = Item(2, 2, -3, 0, 1, "bread")
@@ -315,7 +323,7 @@ def merchant():
                     print(f"Your inventory consists of a " + ', '.join(inventory))
                     item_sell = input("What would you like to sell, or would you like to exit selling").strip().lower()
                     if item_sell in inventory:
-                         if item_sell == "armour" or "knife" or "sword" or "helmet":
+                         if item_sell in ["armour", "knife", "sword", "helmet"]:
                               print(f"Sorry you are not able to sell your {item_sell}")
                          else:          
                               inventory.remove(item_sell)
@@ -364,21 +372,19 @@ def merchant():
                time.sleep(1.5)                       
                       
 
-     
+character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
 
 #Gameplay
 def dametime():         
           print(f"You are in the game {namechosen}")
           inventory_function("Knife")
-          print(f"Your inventory consists of a " + ', '.join(inventory))    
-          Character.consuming(item=knife)
+          character.consuming(item=knife)
+          print(f"These are your stats currently {character.power}, {character.health}")
           movingcharacter()
 
 def movingcharacter():
           while character.is_alive == True: 
-               options = input("""Select one of the following commands: 
-                               showmap move""").strip().lower()
-               
+               options = input("Select one of the following commands:\nshowmap move\nChoice: ").strip().lower()             
                if options == "showmap":
                     print_world_map(world_map,character)
                if options == "move":
@@ -391,7 +397,7 @@ def movingcharacter():
                          print("Invalid direction. Please try again.")  
                
 
-character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
+
 
 startermenu()
 nameselection()
