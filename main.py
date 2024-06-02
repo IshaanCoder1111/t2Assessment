@@ -7,7 +7,7 @@ def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 #Loading Function
-loading = ["Loading👑", "Loading.👑", "Loading..👑"]
+loading = ["Loading👑", "Loading.👑", "Loading..👑", "Loading...👑"]
 def gameloading():
     for i in loading:
                 print(i)
@@ -183,7 +183,7 @@ class Character(Entity):
                         time.sleep(2)
                         self.is_alive = False
                         endgame()
-                    if (self.x, self.y) == (11,4):
+                    if (self.x, self.y) == (12,4):
                          merchant()
                     else:
                         print(f"You move {direction} to the {cell.area.name}.")         
@@ -429,7 +429,7 @@ def movingcharacter():
                if options == "showmap":
                     print_world_map(world_map,character)
                if options == "move":
-                    direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower()
+                    direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower().strip()
                     if "exit" in direction:
                          break
                     elif direction in ["north", "south", "east", "west"]:
