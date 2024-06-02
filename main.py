@@ -290,6 +290,20 @@ medicine = Item(0, 0, 0, 8, 20, "medicine")
 oil = Item(0, 0, 0, 3, 0, "oil")
 sword = Item(50, 0, 0, 15, 0, "sword")
 
+items_dictionary = {
+    "bread": bread,
+    "armour": armour,
+    "meat": meat,
+    "coin": coin,
+    "vegetable": vegetable,
+    "knife": knife,
+    "jewellery": jewellery,
+    "wine glass": wineglass,
+    "medicine": medicine,
+    "oil": oil,
+    "sword": sword
+}
+
 def merchant():
      while True:
           clear()
@@ -301,11 +315,16 @@ def merchant():
                     print(f"Your inventory consists of a " + ', '.join(inventory))
                     item_sell = input("What would you like to sell, or would you like to exit selling").strip().lower()
                     if item_sell in inventory:
-                         inventory.remove(item_sell)
-                         print(f"You have successfully sold the {item_sell}")
-                         print(f"Your inventory currently consists of {inventory}")
-                         input("Press enter to continue: ")
-                         break
+                         if item_sell == "armour" or "knife" or "sword" or "helmet":
+                              print(f"Sorry you are not able to sell your {item_sell}")
+                         else:          
+                              inventory.remove(item_sell)
+                              item_addvalue = items_dictionary[item_sell].value
+                              Character.money += item_addvalue
+                              print(f"You have successfully sold the {item_sell}")
+                              print(f"Your inventory consists of a " + ', '.join(inventory))    
+                              input("Press enter to continue: ")
+                              break
                     elif "exit" in item_sell:
                          print("Exiting the selling area")
                          time.sleep(1.5)
@@ -377,3 +396,7 @@ character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
 startermenu()
 nameselection()
 dametime()
+
+
+
+     
