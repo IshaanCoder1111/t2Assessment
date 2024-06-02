@@ -297,6 +297,8 @@ wineglass = Item(0, 0, 0, 5, 0, "wineglass")
 medicine = Item(0, 0, 0, 8, 20, "medicine")
 oil = Item(0, 0, 0, 3, 0, "oil")
 sword = Item(50, 0, 0, 15, 0, "sword")
+land = Item(0,0,0,50,0,"land ownership") 
+wine = Item(1,-2,-1,5,-2,"wine")
 
 items_dictionary = {
     "bread": bread,
@@ -309,7 +311,9 @@ items_dictionary = {
     "wine glass": wineglass,
     "medicine": medicine,
     "oil": oil,
-    "sword": sword
+    "sword": sword,
+    "land ownership": land,
+    "wine": wine
 }
 
 def collect_items_barren_land(character, cell):
@@ -320,6 +324,34 @@ def collect_items_barren_land(character, cell):
         inventory_function(collect_item)
     else:
         print("There are no items here. Keep on searching!")
+
+def collect_items_village(character, cell):
+    items_chances = ["coin", "vegetable", "bread", None]  
+    collect_item = random.choice(items_chances)  
+    if collect_item:
+        print(f"You found some {collect_item.upper()} while roaming the village!")
+        inventory_function(collect_item)
+    else:
+        print("There are no items here. Keep on searching!")
+
+def collect_items_merchant_farm(character, cell):
+    items_chances = ["oil","medicine","wine glass","jewellery","wine", None]  
+    collect_item = random.choice(items_chances)  
+    if collect_item:
+        print(f"You found some {collect_item.upper()} while roaming the farm!")
+        inventory_function(collect_item)
+    else:
+        print("There are no items here. Keep on searching!")
+
+def collect_items_estate(character, cell):
+    items_chances = ["armour", "land", None]  
+    collect_item = random.choice(items_chances)  
+    if collect_item:
+        print(f"You found some {collect_item.upper()} while roaming the estate!")
+        inventory_function(collect_item)
+    else:
+        print("There are no items here. Keep on searching!")
+
 
 def merchant():
      while True:
@@ -405,6 +437,12 @@ def movingcharacter():
                          current_cell = world_map.get_cell(character.x, character.y)
                          if current_cell.area.name == "Barren Land":
                               collect_items_barren_land(character, current_cell)
+                         if current_cell.area.name == "Estate":
+                              collect_items_estate(character, current_cell)
+                         if current_cell.area.name == "Merchant_farm":
+                              collect_items_merchant_farm(character, current_cell)
+                         if current_cell.area.name == "Village":
+                              collect_items_village(character, current_cell)
                     else:
                          print("Invalid direction. Please try again.")  
                
@@ -412,7 +450,3 @@ def movingcharacter():
 startermenu()
 nameselection()
 dametime()
-
-
-
-     
