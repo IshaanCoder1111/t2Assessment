@@ -169,28 +169,29 @@ class Character(Entity):
             "north": (0, -1),
             "south": (0, 1),
             "east": (1, 0),
-            "west": (-1, 0)
+            "west": (-1, 0) 
         }
         if direction in directions:
-            move_x, move_y = directions[direction]
-            x_change, y_change = self.x + move_x, self.y + move_y
-            if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
-                self.x, self.y = x_change, y_change
-                cell = self.world_map.get_cell(self.x, self.y)
-                if cell and cell.area:
+          move_x, move_y = directions[direction]
+          x_change, y_change = self.x + move_x, self.y + move_y
+          if 0 <= x_change < self.world_map.width and 0 <= y_change < self.world_map.height:
+               self.x, self.y = x_change, y_change
+               print(f"Moved to coordinates: ({self.x}, {self.y})") 
+               if (self.x, self.y) == (11, 3):
+                    merchant()
+               cell = self.world_map.get_cell(self.x, self.y)
+               if cell and cell.area:
                     if cell.area.name == "Ocean":
-                        print("You have entered the ocean and died")
-                        time.sleep(2)
-                        self.is_alive = False
-                        endgame()
-                    if (self.x, self.y) == (12,4):
-                         merchant()
+                         print("You have entered the ocean and died")
+                         time.sleep(2)
+                         self.is_alive = False
+                         endgame()
                     else:
-                        print(f"You move {direction} to the {cell.area.name}.")         
-            else:
-                print("You can't go that way.")
-        else:
-            print("Invalid direction.")
+                         print(f"You move {direction} to the {cell.area.name}.")
+          else:
+               print("You can't go that way.")
+        else:             
+          print("Invalid direction.")
                
      def attacking(self):
           self.stamina -= 3
@@ -356,8 +357,8 @@ def collect_items_estate(character, cell):
 def merchant():
      while True:
           clear()
-          input("WELCOME TO THE MERCHANT!")
-          character_choicemerchant = input("Would you like to 'buy', 'sell', or 'exit'?")
+          print("WELCOME TO THE MERCHANT!")
+          character_choicemerchant = input("Would you like to 'buy', 'sell', or 'exit'? ")
           if "sell" in character_choicemerchant.lower():
                while True:
                     clear()
@@ -382,11 +383,11 @@ def merchant():
                          print(f"You don't currently have {item_sell}")
                          time.sleep(1.5)
 
-          if "buy" in character_choicemerchant:
+          elif "buy" in character_choicemerchant:
                while True:
                     print("These are our current items available")
                     print("Vegetable, Meat, Bread, Medicine")
-                    item_buy = input("Based on these items what would you like to buy, or would you like to exit buying").strip().lower()
+                    item_buy = input("Based on these items what would you like to buy, or would you like to exit buying ").strip().lower()
                     if item_buy == "medicine":
                          inventory_function("medicine")
                     if item_buy == "vegetable":
@@ -402,12 +403,12 @@ def merchant():
                     else:
                          print(f"{item_buy} is not currently in our store, sorry for the inconvenience")
 
-          if "exit" in item_sell:
+          elif "exit" in character_choicemerchant:
                     print("Exiting the merchant")
                     time.sleep(1.5)
                     clear()
-                    movingcharacter()    
-
+                    movingcharacter()
+                    break    
           else:
                print("Thats not an option")  
                time.sleep(1.5)                       
@@ -447,6 +448,4 @@ def movingcharacter():
                          print("Invalid direction. Please try again.")  
                
 
-startermenu()
-nameselection()
-dametime()
+merchant()
