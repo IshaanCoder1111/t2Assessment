@@ -263,12 +263,13 @@ class Enemy(Entity):
                inventory_function("Armour")
 
 
-tiger = Enemy(health=random.randint(25, 35), is_alive=True, power=10, enemy_name="Tiger", loot_options=["Nothing", "Meat"])
-bear = Enemy(health=random.randint(15,25), is_alive=True, power=5, enemy_name="bear", loot_options=["Nothing", "Meat"])
+tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=["Nothing", "Meat"])
+bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=["Nothing", "Meat"])
+stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["Meat"])
 citizen_names = ["Jack", "Fred", "Amelia"]
-citizen = Enemy(health=5, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["Bread", "Vegetables", "Coin", "Nothing"])
-knight = Enemy(health=80, is_alive=True, power=15, enemy_name="Knight", loot_options=["Armour", "Sword", "Helmet"])
-noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["Land"])
+citizen = Enemy(health=30, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["Bread", "Vegetables", "Coin", "Nothing"])
+knight = Enemy(health=100, is_alive=True, power=80, enemy_name="Knight", loot_options=["Armour", "Sword", "Helmet"])
+noble = Enemy(health=200, is_alive=True, power=100, enemy_name="Noble", loot_options=["Land"])
 king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["Crown", "Royal Mantle"])
     
      
@@ -317,6 +318,15 @@ items_dictionary = {
     "wine": wine
 }
 
+def barren_enemydetection(character, cell):
+     enemychances = ["Stray Dog", "Citizen", None]
+     enemy_detection = random.choice(enemychances)
+     if enemy_detection:
+          print(f"You have encountered {enemy_detection}")
+          attackingsystem()#create this later
+     else:
+          print("There are no enemies here, keep on moving soldier!")
+          
 def collect_items_barren_land(character, cell):
     items_chances = ["coin", "vegetable", "bread", None]  
     collect_item = random.choice(items_chances)  
