@@ -335,13 +335,30 @@ randomised_enemies_dict = {
      "Stray Dog": stray_dog,
      "Citizen": citizen
 }
-def barren_enemydetection(character, cell):
+
+def barren_enemy_detection(character, cell):
      enemychances = ["Stray Dog", "Citizen", None]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
           attackingfunction(randomised_enemies_dict[enemy_detection])
      else:
           print("There are no enemies in sight, keep moving soldier!")
+
+def village_enemy_detection(character, cell):
+     enemychances = ["Stray Dog", "Citizen", None, None, None, None, None, None, None]
+     enemy_detection = random.choice(enemychances)
+     if enemy_detection:
+          attackingfunction(randomised_enemies_dict[enemy_detection])
+     else:
+          print("There are no enemies in sight, keep moving soldier!")
+
+
+def forest_enemy_detection(character, cell):
+     animal_selection = random.randint(1, 2)
+     if animal_selection == 1:
+          attackingfunction(tiger)
+     if animal_selection == 2:
+          attackingfunction(bear)
           
           
 def collect_items_barren_land(character, cell):
@@ -443,7 +460,7 @@ def merchant():
 def attackingfunction(enemy):
      while True:
           clear()
-          print(f"You have encountered {enemy}")
+          print(f"You have encountered {enemy.upper()}")
           fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
           if "fight" in fightorflight:
                character.attacking(enemy_type=enemy)
@@ -481,12 +498,16 @@ def movingcharacter():
                          current_cell = world_map.get_cell(character.x, character.y)
                          if current_cell.area.name == "Barren Land":
                               collect_items_barren_land(character, current_cell)
+                              barren_enemy_detection(character, current_cell)
                          if current_cell.area.name == "Estate":
                               collect_items_estate(character, current_cell)
                          if current_cell.area.name == "Merchant_farm":
                               collect_items_merchant_farm(character, current_cell)
                          if current_cell.area.name == "Village":
                               collect_items_village(character, current_cell)
+                              village_enemy_detection(character, current_cell)
+                         if current_cell.area.name == "Forest":
+                              forest_enemy_detection(character, current_cell)
                     else:
                          print("Invalid direction. Please try again.")  
                
