@@ -208,7 +208,7 @@ class Character(Entity):
             enemy_type.attacking()
           if hitormiss2 == 2:
                print(f"{namechosen} has hit the {enemy_type} for {self.power} damage")
-               enemy_type.damage_taken(enemy_type)
+               enemy_type.damage_taken()
                
 
      def damage_taken(self, damage):
@@ -231,6 +231,9 @@ class Enemy(Entity):
           super().__init__(health, is_alive, power)
           self.enemy_name = enemy_name
           self.loot_options = loot_options
+     
+     def __str__(self):       
+          return self.enemy_name
 
      def check_status(self):
           if self.health <= 0:
@@ -252,7 +255,7 @@ class Enemy(Entity):
                        
      def damage_taken(self):
           self.health -= character.power
-          self.check_status(self.enemy_name)
+          self.check_status()
 
      def items_dropped(self):
           global loot
@@ -460,12 +463,13 @@ def merchant():
 def attackingfunction(enemy):
      while True:
           clear()
-          print(f"You have encountered {enemy.upper()}")
+          print(f"You have encountered {enemy}")
           fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
           if "fight" in fightorflight:
                character.attacking(enemy_type=enemy)
           if "flee" in fightorflight:
                character.health -= 5
+               print(f"You are currently on {character.health} from jack hitting you from behind")
                movingcharacter()
           else:
                print("Thats not an option")
@@ -514,4 +518,3 @@ def movingcharacter():
 startermenu()
 nameselection()
 dametime()
-movingcharacter()
