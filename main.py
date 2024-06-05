@@ -1,6 +1,6 @@
 import os, time, random
 
-inventory = []
+inventory = ["bread"]
 
 #Adding a clear function
 def clear():
@@ -454,7 +454,7 @@ def merchant():
                          else:          
                               inventory.remove(item_sell)
                               item_addvalue = items_dictionary[item_sell].value
-                              Character.money += item_addvalue
+                              character.money += item_addvalue
                               print(f"You have successfully sold the {item_sell}")
                               print(f"Your inventory consists of a " + ', '.join(inventory))    
                               input("Press enter to continue: ")
@@ -539,5 +539,6 @@ def movingcharacter():
                     else:
                          print("Invalid direction. Please try again.")  
 
-inventory_function("bread")              
-merchant()
+startermenu()
+nameselection()
+dametime()
