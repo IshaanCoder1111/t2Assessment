@@ -200,6 +200,7 @@ class Character(Entity):
                     attackingfunction("Knight")
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
+               if (self.x, s)
                cell = self.world_map.get_cell(self.x, self.y)
                if cell and cell.area:
                     if cell.area.name == "Ocean":
@@ -396,9 +397,9 @@ def village_enemy_detection(character, cell):
 def forest_enemy_detection(character, cell):
      animal_selection = random.randint(1, 2)
      if animal_selection == 1:
-          attackingfunction("tiger")
+          attackingfunction("Tiger")
      if animal_selection == 2:
-          attackingfunction("bear")
+          attackingfunction("Bear")
           
           
 def collect_items_barren_land(character, cell):
@@ -539,5 +540,3 @@ def movingcharacter():
                     else:
                          print("Invalid direction. Please try again.")  
 
-inventory_function("bread")              
-merchant()
