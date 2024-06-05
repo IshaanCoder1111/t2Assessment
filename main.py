@@ -132,6 +132,21 @@ def print_world_map(world_map, character):
                 print('.', end=' ')
         print()
 
+def attackingfunction(enemy):
+     while True:
+          clear()
+          print(f"You have encountered {enemy}")
+          fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
+          if "fight" in fightorflight:
+               character.attacking(enemy_var=enemy)
+          if "flee" in fightorflight:
+               character.health -= 5
+               print(f"You are currently on {character.health} from jack hitting you from behind")
+               movingcharacter()
+          else:
+               print("Thats not an option")
+               time.sleep(2)
+
 class Entity:
      def __init__(self, health, is_alive, power):
           self.health = health
@@ -180,11 +195,11 @@ class Character(Entity):
                if (self.x, self.y) == (11, 3):
                     merchant()
                if (self.x, self.y) == (16,13):
-                    attackingfunction()     
+                    attackingfunction("Noble")     
                if (self.x, self.y) in [(17,15), (16,16), (17,17), (18,16)]:
-                    attackingfunction()
+                    attackingfunction("Knight")
                if (self.x, self.y) == (9,10):
-                    attackingfunction()
+                    attackingfunction("King")
                cell = self.world_map.get_cell(self.x, self.y)
                if cell and cell.area:
                     if cell.area.name == "Ocean":
@@ -199,30 +214,32 @@ class Character(Entity):
         else:             
           print("Invalid direction.")
                
-     def attacking(self, enemy_type):
+     def attacking(self, enemy_var):
           self.stamina -= 3
           self.hunger += 3
+          if isinstance(enemy_var, str):
+            enemy_var = all_enemy_dict[enemy_var]
           hitormiss2 = random.randint(1,2)
           if hitormiss2 == 1:
             print(f"{namechosen} has missed their attack")
-            enemy_type.attacking()
+            enemy_var.attacking(enemy_var=enemy_var)
           if hitormiss2 == 2:
-               print(f"{namechosen} has hit the {enemy_type} for {self.power} damage")
-               enemy_type.damage_taken()
-               
+               print(f"{namechosen} has hit the {enemy_var} for {self.power} damage")
+               enemy_var.damage_taken(enemy_var=enemy_var)
+      
 
-     def damage_taken(self, damage):
+     def damage_taken(self, damage, enemy_var):
           self.health -= damage
-          self.status_check()
+          self.status_check(enemy_var=enemy_var)
 
-     def status_check(self):
+     def status_check(self, enemy_var):
           if self.health <= 0:
                print(f"{namechosen} has been vanquished")
                self.is_alive = False
                endgame()
           if self.health > 0:
                print(f"{namechosen} has {self.health} hearts left")
-               self.attacking()
+               self.attacking(enemy_var=enemy_var)
 
 
 
@@ -235,31 +252,32 @@ class Enemy(Entity):
      def __str__(self):       
           return self.enemy_name
 
-     def check_status(self):
+     def check_status(self, enemy_var):
           if self.health <= 0:
-               print(f"{self.enemy_name} has been vanquished by {namechosen}, congrats")
+               print(f"{enemy_var} has been vanquished by {namechosen}, congrats")
                self.is_alive = False
                self.items_dropped()
           if self.health > 0:
-               print(f"{self.enemy_name} has {self.health} hearts left")
-               self.enemy_name.attacking()
+               print(f"{enemy_var} has {self.health} hearts left")
+               self.attacking(enemy_var)
                 
-     def attacking(self):
+     def attacking(self, enemy_var):
         hitormiss = random.randint(1,2)
         if hitormiss == 1:
-            print(f"{self.enemy_name} has missed their attack")
-            character.attacking()
+            print(f"{enemy_var} has missed their attack")
+            character.attacking(enemy_var=enemy_var)
         if hitormiss == 2:
-            print(f"{self.enemy_name} has hit the {namechosen} for {self.power} damage")
-            character.damage_taken(damage=self.power)
+            print(f"{enemy_var} has hit the {namechosen} for {self.power} damage")
+            character.damage_taken(damage=self.power, enemy_var=enemy_var)
                        
-     def damage_taken(self):
+     def damage_taken(self, enemy_var):
           self.health -= character.power
-          self.check_status()
+          self.check_status(enemy_var)
 
      def items_dropped(self):
           global loot
-          loot = random.choice(self.loot_options)          
+          loot = random.choice(self.loot_options)    
+          input(f"Congratulations You Have Acquired The {loot} Item, press enter to continue")      
           if loot == "Meat":
                inventory_function("Meat")             
           if loot == "Vegetable":
@@ -267,16 +285,17 @@ class Enemy(Entity):
           if loot == "Bread":
                inventory_function("Bread")
           if loot == "Coin":
-               Character.money += coin.value
+               character.money += coin.value
           if loot == "Sword":
-               Character.consuming(item=sword)
+               character.consuming(item=sword)
                inventory_function("Sword")
           if loot == "Armour":
-               Character.max_health = 200
-               Character.consuming(item=armour)
+               character.max_health = 200
+               character.consuming(item=armour)
                inventory_function("Armour")
-          input(f"Congratulations You Have Acquired The {loot} Item, press enter to continue")
+          
           movingcharacter()
+
 
 
 tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=["Nothing", "Meat"])
@@ -287,6 +306,16 @@ citizen = Enemy(health=30, is_alive=True, power=5, enemy_name= random.choice(cit
 knight = Enemy(health=100, is_alive=True, power=80, enemy_name="Knight", loot_options=["Armour", "Sword", "Helmet"])
 noble = Enemy(health=200, is_alive=True, power=100, enemy_name="Noble", loot_options=["Land"])
 king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["Crown", "Royal Mantle"])
+
+all_enemy_dict = {
+    "Tiger": tiger,
+    "Bear": bear,
+    "Stray Dog": stray_dog,
+    "Citizen": citizen,
+    "Knight": knight,
+    "Noble": noble,
+    "King": king
+}
     
      
 
@@ -334,16 +363,14 @@ items_dictionary = {
     "wine": wine
 }
 
-randomised_enemies_dict = {
-     "Stray Dog": stray_dog,
-     "Citizen": citizen
-}
+
+
 
 def barren_enemy_detection(character, cell):
      enemychances = ["Stray Dog", "Citizen", None]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
-          attackingfunction(randomised_enemies_dict[enemy_detection])
+          attackingfunction(enemy_detection)
      else:
           print("There are no enemies in sight, keep moving soldier!")
 
@@ -351,7 +378,7 @@ def village_enemy_detection(character, cell):
      enemychances = ["Stray Dog", "Citizen", None, None, None, None, None, None, None]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
-          attackingfunction(randomised_enemies_dict[enemy_detection])
+          attackingfunction(enemy_detection)
      else:
           print("There are no enemies in sight, keep moving soldier!")
 
@@ -460,20 +487,6 @@ def merchant():
                print("Thats not an option")  
                time.sleep(1.5)                       
                       
-def attackingfunction(enemy):
-     while True:
-          clear()
-          print(f"You have encountered {enemy}")
-          fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
-          if "fight" in fightorflight:
-               character.attacking(enemy_type=enemy)
-          if "flee" in fightorflight:
-               character.health -= 5
-               print(f"You are currently on {character.health} from jack hitting you from behind")
-               movingcharacter()
-          else:
-               print("Thats not an option")
-               time.sleep(2)
 
 
 
@@ -485,15 +498,17 @@ def dametime():
           print(f"You are in the game {namechosen}")
           inventory_function("Knife")
           character.consuming(item=knife)
-          print(f"These are your stats currently {character.power}, {character.health}")
           movingcharacter()
 
 def movingcharacter():
           while character.is_alive == True: 
-               options = input("Select one of the following commands:\nshowmap move\nChoice: ").strip().lower()             
-               if options == "showmap":
+               print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money,}, Max Health={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
+               options = input("Select one of the following commands:\nshowmap move inventory\nChoice: ").strip().lower()   
+               if "inventory" in options:
+                    print(f"Your inventory consists of a " + ', '.join(inventory))                
+               if "showmap" in options:
                     print_world_map(world_map,character)
-               if options == "move":
+               if "move" in options:
                     direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower().strip()
                     if "exit" in direction:
                          break
