@@ -1,6 +1,6 @@
 import os, time, random
 
-inventory = ["bread"]
+inventory = []
 
 #Adding a clear function
 def clear():
@@ -284,25 +284,25 @@ class Enemy(Entity):
           global loot
           loot = random.choice(self.loot_options)    
           input(f"Congratulations You Have Acquired The {loot} Item, press enter to continue")      
-          if loot == "Meat":
-               inventory_function("Meat")             
-          if loot == "Vegetable":
-               inventory_function("Vegetable")              
-          if loot == "Bread":
-               inventory_function("Bread")
-          if loot == "Coin":
+          if loot == "meat":
+               inventory_function("meat")             
+          if loot == "vegetable":
+               inventory_function("vegetable")              
+          if loot == "bread":
+               inventory_function("bread")
+          if loot == "coin":
                character.money += coin.value
-          if loot == "Sword":
+          if loot == "sword":
                print("Your knife is thrown away")
                character.consuming(item=sword)
-               inventory.remove("Knife")
+               inventory.remove("knife")
                character.power -= 20
                character.stamina -= 10
-               inventory_function("Sword")
-          if loot == "Armour":
+               inventory_function("sword")
+          if loot == "armour":
                character.max_health = 200
                character.consuming(item=armour)
-               inventory_function("Armour")
+               inventory_function("armour")
           
           movingcharacter()
 
@@ -377,7 +377,7 @@ items_dictionary = {
 
 
 def barren_enemy_detection(character, cell):
-     enemychances = ["Stray Dog", "Citizen", None]
+     enemychances = ["Stray Dog", "Citizen", None, None, None, None, None,]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
           attackingfunction(enemy_detection)
@@ -385,7 +385,7 @@ def barren_enemy_detection(character, cell):
           print("There are no enemies in sight, keep moving soldier!")
 
 def village_enemy_detection(character, cell):
-     enemychances = ["Stray Dog", "Citizen", None, None, None, None, None, None, None]
+     enemychances = ["Stray Dog", "Citizen", None, None, None, None, None, None]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
           attackingfunction(enemy_detection)
@@ -396,9 +396,9 @@ def village_enemy_detection(character, cell):
 def forest_enemy_detection(character, cell):
      animal_selection = random.randint(1, 2)
      if animal_selection == 1:
-          attackingfunction(tiger)
+          attackingfunction("tiger")
      if animal_selection == 2:
-          attackingfunction(bear)
+          attackingfunction("bear")
           
           
 def collect_items_barren_land(character, cell):
@@ -454,7 +454,7 @@ def merchant():
                          else:          
                               inventory.remove(item_sell)
                               item_addvalue = items_dictionary[item_sell].value
-                              character.money += item_addvalue
+                              Character.money += item_addvalue
                               print(f"You have successfully sold the {item_sell}")
                               print(f"Your inventory consists of a " + ', '.join(inventory))    
                               input("Press enter to continue: ")
@@ -539,6 +539,5 @@ def movingcharacter():
                     else:
                          print("Invalid direction. Please try again.")  
 
-startermenu()
-nameselection()
-dametime()
+inventory_function("bread")              
+merchant()
