@@ -173,9 +173,6 @@ class Character(Entity):
           if item.name in ["vegetable","meat", "bread", "medicine"]:
                print(f"The {item} has been removed from your inventory")
                inventory.remove(item)
-               print(f"Stats after consuming {item.name} Power:{self.power}, Health:{self.health}, Stamina:{self.stamina}, Hunger:{self.hunger}")
-          else:
-               print(f"Stats after obtaining {item.name} Power:{self.power}, Health:{self.health}, Stamina:{self.stamina}, Hunger:{self.hunger}")
      
      def movement(self, direction):
         self.stamina -= 3
@@ -222,9 +219,11 @@ class Character(Entity):
           hitormiss2 = random.randint(1,2)
           if hitormiss2 == 1:
             print(f"{namechosen} has missed their attack")
+            time.sleep(1.5)
             enemy_var.attacking(enemy_var=enemy_var)
           if hitormiss2 == 2:
                print(f"{namechosen} has hit the {enemy_var} for {self.power} damage")
+               time.sleep(1.5)
                enemy_var.damage_taken(enemy_var=enemy_var)
       
 
@@ -239,6 +238,7 @@ class Character(Entity):
                endgame()
           if self.health > 0:
                print(f"{namechosen} has {self.health} hearts left")
+               time.sleep(1.5)
                self.attacking(enemy_var=enemy_var)
 
 
@@ -259,15 +259,18 @@ class Enemy(Entity):
                self.items_dropped()
           if self.health > 0:
                print(f"{enemy_var} has {self.health} hearts left")
+               time.sleep(1.5)
                self.attacking(enemy_var)
                 
      def attacking(self, enemy_var):
         hitormiss = random.randint(1,2)
         if hitormiss == 1:
             print(f"{enemy_var} has missed their attack")
+            time.sleep(1.5)
             character.attacking(enemy_var=enemy_var)
         if hitormiss == 2:
             print(f"{enemy_var} has hit the {namechosen} for {self.power} damage")
+            time.sleep(1.5)
             character.damage_taken(damage=self.power, enemy_var=enemy_var)
                        
      def damage_taken(self, enemy_var):
@@ -287,7 +290,11 @@ class Enemy(Entity):
           if loot == "Coin":
                character.money += coin.value
           if loot == "Sword":
+               print("Your knife is thrown away")
                character.consuming(item=sword)
+               inventory.remove("Knife")
+               character.power -= 20
+               character.stamina -= 10
                inventory_function("Sword")
           if loot == "Armour":
                character.max_health = 200
@@ -343,7 +350,7 @@ jewellery = Item(0, 0, 0, 5, 0, "jewellery")
 wineglass = Item(0, 0, 0, 5, 0, "wineglass")
 medicine = Item(0, 0, 0, 8, 20, "medicine")
 oil = Item(0, 0, 0, 3, 0, "oil")
-sword = Item(50, 0, 0, 15, 0, "sword")
+sword = Item(50, 5 , 0, 30, 0, "sword")
 land = Item(0,0,0,50,0,"land ownership") 
 wine = Item(1,-2,-1,5,-2,"wine")
 
@@ -502,7 +509,7 @@ def dametime():
 
 def movingcharacter():
           while character.is_alive == True: 
-               print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money,}, Max Health={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
+               print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
                options = input("Select one of the following commands:\nshowmap move inventory\nChoice: ").strip().lower()   
                if "inventory" in options:
                     print(f"Your inventory consists of a " + ', '.join(inventory))                
