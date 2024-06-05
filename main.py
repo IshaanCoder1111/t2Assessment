@@ -476,6 +476,7 @@ def merchant():
                          item_var = items_dictionary[item_buy]
                          if character.money >= item_var.value:
                               inventory_function(item_buy)
+                              character.money -= item_var.value
                          else:
                               print(f"You don't have enough money for {item_buy}")
                     elif "exit" in item_buy:
