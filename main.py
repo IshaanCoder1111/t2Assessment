@@ -61,7 +61,11 @@ def endgame():
           exit()
 
 def inventory_function(item_received):
+     print("Item received")
      inventory.append(item_received.lower())
+     if item_received == "coin":
+          character.money += coin.value
+          inventory.remove("coin")
      print(f"Your inventory consists of a " + ', '.join(inventory))   
 
 class Cell:
@@ -134,7 +138,6 @@ def print_world_map(world_map, character):
 
 def attackingfunction(enemy):
      while True:
-          clear()
           print(f"You have encountered {enemy}")
           fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
           if "fight" in fightorflight:
@@ -305,14 +308,14 @@ class Enemy(Entity):
 
 
 
-tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=["Nothing", "Meat"])
-bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=["Nothing", "Meat"])
-stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["Meat"])
+tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=[None, "meat"])
+bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"])
+stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"])
 citizen_names = ["Jack", "Fred", "Amelia"]
-citizen = Enemy(health=30, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["Bread", "Vegetables", "Coin", "Nothing"])
-knight = Enemy(health=100, is_alive=True, power=80, enemy_name="Knight", loot_options=["Armour", "Sword", "Helmet"])
-noble = Enemy(health=200, is_alive=True, power=100, enemy_name="Noble", loot_options=["Land"])
-king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["Crown", "Royal Mantle"])
+citizen = Enemy(health=30, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None])
+knight = Enemy(health=100, is_alive=True, power=80, enemy_name="Knight", loot_options=["armour", "sword", "helmet"])
+noble = Enemy(health=200, is_alive=True, power=100, enemy_name="Noble", loot_options=["land"])
+king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["crown", "royal mantle"])
 
 all_enemy_dict = {
     "Tiger": tiger,
@@ -444,7 +447,7 @@ def merchant():
                while True:
                     clear()
                     print(f"Your inventory consists of a " + ', '.join(inventory))
-                    item_sell = input("What would you like to sell, or would you like to exit selling").strip().lower()
+                    item_sell = input("What would you like to sell, or would you like to exit selling: ").strip().lower()
                     if item_sell in inventory:
                          if item_sell in ["armour", "knife", "sword", "helmet"]:
                               print(f"Sorry you are not able to sell your {item_sell}")
@@ -503,7 +506,7 @@ character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
 #Gameplay
 def dametime():         
           print(f"You are in the game {namechosen}")
-          inventory_function("Knife")
+          inventory_function("knife")
           character.consuming(item=knife)
           movingcharacter()
 
