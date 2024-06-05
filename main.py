@@ -442,8 +442,8 @@ def merchant():
      while True:
           clear()
           print("WELCOME TO THE MERCHANT!")
-          character_choicemerchant = input("Would you like to 'buy', 'sell', or 'exit'? ")
-          if "sell" in character_choicemerchant.lower():
+          character_choicemerchant = input("Would you like to 'buy', 'sell', or 'exit'? ").strip().lower()
+          if "sell" in character_choicemerchant:
                while True:
                     clear()
                     print(f"Your inventory consists of a " + ', '.join(inventory))
@@ -472,14 +472,12 @@ def merchant():
                     print("These are our current items available")
                     print("Vegetable, Meat, Bread, Medicine")
                     item_buy = input("Based on these items what would you like to buy, or would you like to exit buying ").strip().lower()
-                    if item_buy == "medicine":
-                         inventory_function("medicine")
-                    if item_buy == "vegetable":
-                         inventory_function("vegetable")
-                    if item_buy == "meat":
-                         inventory_function("meat")
-                    if item_buy == "bread":
-                         inventory_function("bread")
+                    if item_buy in ["medicine", "vegetable", "meat", "bread"]:
+                         item_var = items_dictionary[item_buy]
+                         if character.money >= item_var.value:
+                              inventory_function(item_buy)
+                         else:
+                              print(f"You don't have enough money for {item_buy}")
                     elif "exit" in item_buy:
                          print("Exiting the buying area")
                          time.sleep(1.5)
@@ -539,7 +537,6 @@ def movingcharacter():
                               forest_enemy_detection(character, current_cell)
                     else:
                          print("Invalid direction. Please try again.")  
-               
-startermenu()
-nameselection()
-dametime()
+
+inventory_function("bread")              
+merchant()
