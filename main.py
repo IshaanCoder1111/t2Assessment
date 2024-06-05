@@ -200,7 +200,6 @@ class Character(Entity):
                     attackingfunction("Knight")
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
-               if (self.x, s)
                cell = self.world_map.get_cell(self.x, self.y)
                if cell and cell.area:
                     if cell.area.name == "Ocean":
@@ -540,3 +539,6 @@ def movingcharacter():
                     else:
                          print("Invalid direction. Please try again.")  
 
+startermenu()
+nameselection()
+dametime()
