@@ -195,9 +195,9 @@ class Character(Entity):
                print(f"Moved to coordinates: ({self.x}, {self.y})") 
                if (self.x, self.y) == (11, 3):
                     merchant()
-               if (self.x, self.y) == (16,16):
+               if (self.x, self.y) == (17,15):
                     attackingfunction("Noble")     
-               if (self.x, self.y) in [(17,15), (16,16), (17,17), (18,16)]:
+               if (self.x, self.y) in [(17, 14), (16, 15), (17, 16), (18, 15)]:
                     attackingfunction("Knight")
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
@@ -402,21 +402,7 @@ def forest_enemy_detection(character, cell):
      if animal_selection == 2:
           attackingfunction("Bear")
 
-def estate_enemy_detection(character, cell):
-    print("Checking coordinates:", (character.x, character.y))
-    if (character.x, character.y) in [(17, 14), (16, 15), (17, 16), (18, 15)]:
-        print("Knight detected")
-        attackingfunction("Knight")
-    elif (character.x, character.y) == (17, 15):  # Corrected condition here
-        print("Noble detected")
-        attackingfunction("Noble")
-    else:
-        print("No enemies detected")
-        print("There are no enemies in sight, keep moving soldier!")
-
          
-
-          
           
 def collect_items_barren_land(character, cell):
     items_chances = ["coin", "vegetable", "bread", None]  
@@ -543,7 +529,6 @@ def movingcharacter():
                               barren_enemy_detection(character, current_cell)
                          if current_cell.area.name == "Estate":
                               collect_items_estate(character, current_cell)
-                              estate_enemy_detection(character, current_cell)
                          if current_cell.area.name == "Merchant_farm":
                               collect_items_merchant_farm(character, current_cell)
                          if current_cell.area.name == "Village":
