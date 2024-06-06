@@ -1,3 +1,4 @@
+
 import os, time, random
 
 inventory = []
@@ -139,10 +140,10 @@ def print_world_map(world_map, character):
 def attackingfunction(enemy):
      while True:
           print(f"You have encountered {enemy}")
-          fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
-          if "fight" in fightorflight:
+          fightorflee = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
+          if "fight" in fightorflee:
                character.attacking(enemy_var=enemy)
-          if "flight" in fightorflight:
+          if "flight" in fightorflee:
                character.health -= 5
                print(f"You are currently on {character.health} from {enemy} hitting you from behind")
                movingcharacter()
@@ -400,6 +401,21 @@ def forest_enemy_detection(character, cell):
           attackingfunction("Tiger")
      if animal_selection == 2:
           attackingfunction("Bear")
+
+def estate_enemy_detection(character, cell):
+    print("Checking coordinates:", (character.x, character.y))
+    if (character.x, character.y) in [(17, 14), (16, 15), (17, 16), (18, 15)]:
+        print("Knight detected")
+        attackingfunction("Knight")
+    elif (character.x, character.y) == (17, 15):  # Corrected condition here
+        print("Noble detected")
+        attackingfunction("Noble")
+    else:
+        print("No enemies detected")
+        print("There are no enemies in sight, keep moving soldier!")
+
+         
+
           
           
 def collect_items_barren_land(character, cell):
@@ -498,10 +514,7 @@ def merchant():
                time.sleep(1.5)                       
                       
 
-
-
-
-character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
+character = Character(100, True, 10, 100, 0, 0, 100, 17, 13, world_map= world_map)
 
 #Gameplay
 def dametime():         
@@ -521,7 +534,7 @@ def movingcharacter():
                elif "move" in options:
                     direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower().strip()
                     if "exit" in direction:
-                         break
+                         movingcharacter()
                     elif direction in ["north", "south", "east", "west"]:
                          character.movement(direction)
                          current_cell = world_map.get_cell(character.x, character.y)
@@ -530,6 +543,7 @@ def movingcharacter():
                               barren_enemy_detection(character, current_cell)
                          if current_cell.area.name == "Estate":
                               collect_items_estate(character, current_cell)
+                              estate_enemy_detection(character, current_cell)
                          if current_cell.area.name == "Merchant_farm":
                               collect_items_merchant_farm(character, current_cell)
                          if current_cell.area.name == "Village":
@@ -541,7 +555,15 @@ def movingcharacter():
                     else:
                          print("Invalid direction. Please try again.")  
                elif "exit" in options:
-                    break 
+                    quitting = input("Are you sure you would like to exit the game, if you type yes your progress will not be saved and you will exit or type no to cancel.") 
+                    if quitting == "yes":
+                         break
+                    elif quitting == "no":
+                         movingcharacter()
+                    else:
+                         print("That is an invalid option. Type either yes or no.")
+                         quitting = input("Are you sure you would like to exit the game, if you type yes your progress will not be saved and you will exit or type no to cancel.") 
+
                else:
                     print("This is not an option")
 
