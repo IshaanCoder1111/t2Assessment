@@ -1,3 +1,4 @@
+
 import os, time, random
 
 inventory = []
@@ -194,9 +195,9 @@ class Character(Entity):
                print(f"Moved to coordinates: ({self.x}, {self.y})") 
                if (self.x, self.y) == (11, 3):
                     merchant()
-               if (self.x, self.y) == (16,16):
+               if (self.x, self.y) == (17,15):
                     attackingfunction("Noble")     
-               if (self.x, self.y) in [(17,15), (16,16), (17,17), (18,16)]:
+               if (self.x, self.y) in [(17,14), (16,15), (17,16), (18,15)]:
                     attackingfunction("Knight")
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
@@ -208,6 +209,12 @@ class Character(Entity):
                          time.sleep(2)
                          self.is_alive = False
                          endgame()
+                    if cell.area.name == "Castle":
+                         if "key" in inventory:
+                              print("You have unlocked the gates and have enetered the castle")
+                         else:
+                              print("You need to get the key from the noble to unlock the gates to the castle.")
+                              self.x, self.y = self.world_map.width // 2, self.world_map.height // 2
                     else:
                          print(f"You move {direction} to the {cell.area.name}.")
           else:
@@ -366,6 +373,7 @@ oil = Item(0, 0, 0, 3, 0, "oil")
 sword = Item(50, 5 , 0, 30, 0, "sword")
 land = Item(0,0,0,50,0,"land ownership") 
 wine = Item(1,-2,-1,5,-2,"wine")
+key = Item(0,0,0,0,0,"key")
 
 items_dictionary = {
     "bread": bread,
@@ -380,7 +388,8 @@ items_dictionary = {
     "oil": oil,
     "sword": sword,
     "land ownership": land,
-    "wine": wine
+    "wine": wine,
+    "key": key
 }
 
 
@@ -459,7 +468,7 @@ def merchant():
                     print(f"Your inventory consists of a " + ', '.join(inventory))
                     item_sell = input("What would you like to sell, or would you like to exit selling: ").strip().lower()
                     if item_sell in inventory:
-                         if item_sell in ["armour", "knife", "sword", "helmet"]:
+                         if item_sell in ["armour", "knife", "sword", "helmet","key:"]:
                               print(f"Sorry you are not able to sell your {item_sell}")
                          else:          
                               inventory.remove(item_sell)
@@ -510,7 +519,7 @@ def merchant():
 
 
 
-character = Character(100, True, 10, 100, 0, 0, 100, 1, 1, world_map= world_map)
+character = Character(100, True, 10, 100, 0, 0, 100, 11, 8, world_map= world_map)
 
 #Gameplay
 def dametime():         
@@ -530,7 +539,7 @@ def movingcharacter():
                elif "move" in options:
                     direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower().strip()
                     if "exit" in direction:
-                         break
+                         movingcharacter()
                     elif direction in ["north", "south", "east", "west"]:
                          character.movement(direction)
                          current_cell = world_map.get_cell(character.x, character.y)
@@ -551,7 +560,14 @@ def movingcharacter():
                     else:
                          print("Invalid direction. Please try again.")  
                elif "exit" in options:
-                    break 
+                    quitting = input("Are you sure you would like to exit the game, if you type yes your progress will not be saved and you will exit or type no to cancel.") 
+                    if quitting == "yes":
+                         break
+                    elif quitting == "no":
+                         movingcharacter()
+                    else:
+                         print("That is an invalid option. Type either yes or no.")
+                         quitting = input("Are you sure you would like to exit the game, if you type yes your progress will not be saved and you will exit or type no to cancel.")  
                else:
                     print("This is not an option")
 
