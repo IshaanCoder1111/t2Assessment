@@ -283,16 +283,23 @@ class Enemy(Entity):
 
      def items_dropped(self):
           global loot
-          loot = random.choice(self.loot_options)    
+          loot = random.choice(self.loot_options)
+          if loot == None:
+               print("No item has been dropped")
+               movingcharacter()    
           input(f"Congratulations You Have Acquired The {loot} Item, press enter to continue")      
           if loot == "meat":
-               inventory_function("meat")             
+               inventory_function("meat")
+               movingcharacter()             
           if loot == "vegetable":
-               inventory_function("vegetable")              
+               inventory_function("vegetable")
+               movingcharacter()              
           if loot == "bread":
                inventory_function("bread")
+               movingcharacter()
           if loot == "coin":
                character.money += coin.value
+               movingcharacter()
           if loot == "sword":
                print("Your knife is thrown away")
                character.consuming(item=sword)
@@ -300,12 +307,14 @@ class Enemy(Entity):
                character.power -= 20
                character.stamina -= 10
                inventory_function("sword")
+               movingcharacter()
           if loot == "armour":
                character.max_health = 200
                character.consuming(item=armour)
                inventory_function("armour")
+               movingcharacter()
           
-          movingcharacter()
+          
 
 
 
