@@ -513,7 +513,7 @@ def dametime():
 def movingcharacter():
           while character.is_alive == True: 
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
-               options = input("Select one of the following commands:\nshowmap move inventory exit\nChoice: ").strip().lower()   
+               options = input("Select one of the following commands:\nshowmap move inventory\nChoice: ").strip().lower()   
                if "inventory" in options:
                     print(f"Your inventory consists of a " + ', '.join(inventory))                
                elif "showmap" in options:
@@ -538,9 +538,7 @@ def movingcharacter():
                          if current_cell.area.name == "Forest":
                               forest_enemy_detection(character, current_cell)
                     else:
-                         print("Invalid direction. Please try again.") 
-               elif "exit" in options:
-                    break 
+                         print("Invalid direction. Please try again.")  
                else:
                     print("This is not an option")
 
