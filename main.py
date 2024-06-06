@@ -40,7 +40,7 @@ def nameselection():
         namechosen = input("Chosen Name(No More Than 10 Characters): ") 
         if 0 < len(namechosen) <= 10:
             print(f"WELCOME TO KING OF THE CASTLE {namechosen.upper()}")
-            input("Press any key to continue")
+            input("Press any enter to continue: ")
             gameloading()
             break
         elif len(namechosen) >= 10:
@@ -142,9 +142,9 @@ def attackingfunction(enemy):
           fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
           if "fight" in fightorflight:
                character.attacking(enemy_var=enemy)
-          if "flee" in fightorflight:
+          if "flight" in fightorflight:
                character.health -= 5
-               print(f"You are currently on {character.health} from jack hitting you from behind")
+               print(f"You are currently on {character.health} from {enemy} hitting you from behind")
                movingcharacter()
           else:
                print("Thats not an option")
@@ -194,12 +194,13 @@ class Character(Entity):
                print(f"Moved to coordinates: ({self.x}, {self.y})") 
                if (self.x, self.y) == (11, 3):
                     merchant()
-               if (self.x, self.y) == (16,13):
+               if (self.x, self.y) == (16,16):
                     attackingfunction("Noble")     
                if (self.x, self.y) in [(17,15), (16,16), (17,17), (18,16)]:
                     attackingfunction("Knight")
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
+
                cell = self.world_map.get_cell(self.x, self.y)
                if cell and cell.area:
                     if cell.area.name == "Ocean":
@@ -283,7 +284,7 @@ class Enemy(Entity):
      def items_dropped(self):
           global loot
           loot = random.choice(self.loot_options)    
-          input(f"Congratulations You Have Acquired The {loot} Item, press enter to continue")      
+          input(f"Congratulations You Have Acquired The {loot.upper()} Item, press enter to continue")      
           if loot == "meat":
                inventory_function("meat")             
           if loot == "vegetable":
@@ -314,7 +315,7 @@ stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", lo
 citizen_names = ["Jack", "Fred", "Amelia"]
 citizen = Enemy(health=30, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None])
 knight = Enemy(health=100, is_alive=True, power=80, enemy_name="Knight", loot_options=["armour", "sword", "helmet"])
-noble = Enemy(health=200, is_alive=True, power=100, enemy_name="Noble", loot_options=["land"])
+noble = Enemy(health=200, is_alive=True, power=100, enemy_name="Noble", loot_options=["land", "key"])
 king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["crown", "royal mantle"])
 
 all_enemy_dict = {
@@ -385,7 +386,7 @@ def barren_enemy_detection(character, cell):
           print("There are no enemies in sight, keep moving soldier!")
 
 def village_enemy_detection(character, cell):
-     enemychances = ["Stray Dog", "Citizen", None, None, None, None, None, None]
+     enemychances = ["Stray Dog", "Citizen"]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
           attackingfunction(enemy_detection)
@@ -512,12 +513,12 @@ def dametime():
 def movingcharacter():
           while character.is_alive == True: 
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
-               options = input("Select one of the following commands:\nshowmap move inventory\nChoice: ").strip().lower()   
+               options = input("Select one of the following commands:\nshowmap move inventory exit\nChoice: ").strip().lower()   
                if "inventory" in options:
                     print(f"Your inventory consists of a " + ', '.join(inventory))                
-               if "showmap" in options:
+               elif "showmap" in options:
                     print_world_map(world_map,character)
-               if "move" in options:
+               elif "move" in options:
                     direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower().strip()
                     if "exit" in direction:
                          break
@@ -537,7 +538,11 @@ def movingcharacter():
                          if current_cell.area.name == "Forest":
                               forest_enemy_detection(character, current_cell)
                     else:
-                         print("Invalid direction. Please try again.")  
+                         print("Invalid direction. Please try again.") 
+               elif "exit" in options:
+                    break 
+               else:
+                    print("This is not an option")
 
 startermenu()
 nameselection()
