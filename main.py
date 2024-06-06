@@ -168,6 +168,8 @@ class Character(Entity):
           self.x = x_start
           self.y = y_start
           self.world_map = world_map
+          self.visited_noble = False
+          self.visited_knight = False
 
      def consuming(self, item):
           self.health += item.health
@@ -195,10 +197,12 @@ class Character(Entity):
                print(f"Moved to coordinates: ({self.x}, {self.y})") 
                if (self.x, self.y) == (11, 3):
                     merchant()
-               if (self.x, self.y) == (17,15):
+               if (self.x, self.y) == (17,15) and self.visited_noble == False:
                     attackingfunction("Noble")     
-               if (self.x, self.y) in [(17,14), (16,15), (17,16), (18,15)]:
+                    self.visited_noble = True
+               if (self.x, self.y) in [(17,14), (16,15), (17,16), (18,15)] and self.visited_knight == False:
                     attackingfunction("Knight")
+                    self.visited_knight = True
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
 
