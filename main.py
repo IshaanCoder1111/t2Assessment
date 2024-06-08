@@ -566,7 +566,7 @@ def dametime():
           time.sleep(2)
           print(f"{namechosen.upper()}: MOTHER NOOOO!")
           time.sleep(1)
-          print(f"{namechosen.upper()}'s MOTHER: Don't worry my child... you shall be king one day...")
+          print(f"{namechosen.upper()}'s MOTHER: Don't worry my child... you... shall... be king one day...")
           time.sleep(7)
           clear()
           print("PRESENT DAY...")
@@ -577,6 +577,7 @@ After years of training and preparation and drawing out a map and plan to acheiv
 He was finally ready. \x1B[23m""")
           
           input("Press Enter to continue into game: ")
+          clear()
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
           character.consuming(item=knife)
