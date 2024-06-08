@@ -196,6 +196,15 @@ class Character(Entity):
                self.x, self.y = x_change, y_change
                print(f"Moved to coordinates: ({self.x}, {self.y})") 
                if (self.x, self.y) == (11, 3):
+                    clear()
+                    print(f"{namechosen}: HUH... whe..where am I?")
+                    time.sleep(2)
+                    print("""Merchant: Welcome young one! You have finally found me. I've heard plenty about you and am well aware of your intentions.
+By coming here you will be able to buy and sell items to continue your journey and fulfil your quest to takeover the throne.
+You are able to come here anytime throughout your journey to earn a valuable. 
+Now what would you like to do, if you buy an item I promise not to tell the king🤫""") 
+                    input("Press enter to continue: ")
+                    clear()
                     merchant()
                if (self.x, self.y) == (17,15) and self.visited_noble == False:
                     attackingfunction("Noble")     
