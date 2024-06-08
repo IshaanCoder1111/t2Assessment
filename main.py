@@ -171,27 +171,13 @@ class Character(Entity):
           self.visited_noble = False
           self.visited_knight = False
 
-     def consuming_food():
-          edible_items = []
-          for food in inventory:
-               if food in ["vegetable", "bread", "medicine", "meat"]:
-                    edible_items.append(food)
-               else: 
-                    pass
-          print("The items that are edible within your inventory are" + ', '.join(edible_items))
-          consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()
-          while True:
-               if consumed_item in edible_items:
-                    print(f"Eating the {consumed_item}...")
-                    character.consuming(consumed_item)
-                    inventory.remove(consumed_item)
-                    print(f"Your inventory consists of a " + ', '.join(inventory))
-                    time.sleep(2)
-                    movingcharacter()
-               elif "exit" in edible_items:
-                    break
-               else:
-                    print("Thats not an option")
+     def consuming(self, item):
+          self.health += item.health
+          self.power += item.power
+          self.hunger += item.hunger
+          self.stamina += item.stamina
+ 
+
      
      def movement(self, direction):
         self.stamina -= 3
@@ -543,7 +529,27 @@ def merchant():
                       
 
 
-
+def consuming_food():
+          edible_items = []        
+          for food in inventory:
+               if food in ["vegetable", "bread", "medicine", "meat"]:
+                    edible_items.append(food)
+               else: 
+                    pass
+          print("The items that are edible within your inventory are" + ', '.join(edible_items))
+          consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()
+          while True:
+               if consumed_item in edible_items:
+                    print(f"Eating the {consumed_item}...")
+                    inventory.remove(items_dictionary[consumed_item])
+                    character.consuming(consumed_item)
+                    print(f"Your inventory consists of a " + ', '.join(inventory))
+                    time.sleep(2)
+                    movingcharacter()
+               elif "exit" in edible_items:
+                    break
+               else:
+                    print("Thats not an option")
 
 character = Character(100, True, 10, 100, 0, 0, 100, 11, 8, world_map= world_map)
 
