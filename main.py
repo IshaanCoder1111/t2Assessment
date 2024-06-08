@@ -1,4 +1,5 @@
 
+
 import os, time, random
 
 inventory = []
@@ -567,7 +568,7 @@ def dametime():
           print(f"{namechosen.upper()}: MOTHER NOOOO!")
           time.sleep(1)
           print(f"{namechosen.upper()}'s MOTHER: Don't worry my child... you... shall... be king one day...")
-          time.sleep(7)
+          input("Press Enter to Continue: ")
           clear()
           print("PRESENT DAY...")
           print(f"""\x1B[3mAs {namechosen}'s mother was taken away to be killed by the king 20 years ago. \x1B[23m
