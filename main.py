@@ -562,7 +562,7 @@ def dametime():
           time.sleep(3)
           print(f"{namechosen}'s Mother: NOO! LEAVE {namechosen.upper()} ALONE! ") 
           time.sleep(1.5)
-          print("\x1B[3mKnight aggresively drops {namechosen} and grabs the mother")
+          print(f"\x1B[3mKnight aggresively drops {namechosen} and grabs the mother")
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
           character.consuming(item=knife)
