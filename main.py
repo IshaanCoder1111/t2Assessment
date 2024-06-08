@@ -177,8 +177,15 @@ class Character(Entity):
           self.power += item.power
           self.hunger += item.hunger
           self.stamina += item.stamina
- 
-
+          if item.name in ["vegetable","meat", "bread", "medicine"]:
+               print(f"The {item} has been removed from your inventory")
+               inventory.remove(item.name)
+          else:
+               print("What a silly try, you cannot consume this item")
+               self.health -= item.health 
+               self.power -= item.power
+               self.hunger -= item.hunger
+               self.stamina -= item.stamina
      
      def movement(self, direction):
         self.stamina -= 3
@@ -322,7 +329,7 @@ class Enemy(Entity):
                movingcharacter()
           if loot == "sword":
                print("Your knife is thrown away")
-               character.consuming(item=sword)
+               #character.consuming(item=sword)
                inventory.remove("knife")
                character.power -= 20
                character.stamina -= 10
@@ -330,7 +337,7 @@ class Enemy(Entity):
                movingcharacter()
           if loot == "armour":
                character.max_health = 200
-               character.consuming(item=armour)
+               #character.consuming(item=armour)
                inventory_function("armour")
                movingcharacter()
           
@@ -530,7 +537,7 @@ def merchant():
                       
 
 
-def consuming_food():
+"""def consuming_food():
           edible_items = []        
           for food in inventory:
                if food in ["vegetable", "bread", "medicine", "meat"]:
@@ -550,9 +557,9 @@ def consuming_food():
                elif "exit" in edible_items:
                     break
                else:
-                    print("Thats not an option")
+                    print("Thats not an option")"""
 
-character = Character(100, True, 10, 100, 0, 0, 100, 11, 8, world_map= world_map)
+character = Character(100, True, 10, 100, 0, 0, 100, 6, 3, world_map= world_map)
 
 #Gameplay
 def dametime():
@@ -576,13 +583,14 @@ The words of {namechosen}'s mother had always had a place in his heart.
 {namechosen} promised... he will become the king of the castle. 
 After years of training and preparation and drawing out a map and plan to acheive his goal. 
 He was finally ready. \x1B[23m""")
-          
           input("Press Enter to continue into game: ")
           clear()
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
-          character.consuming(item=knife)
+          #character.consuming(item=knife)
           movingcharacter()
+          """if character.health > character.max_health:
+               character.health == character.max_health"""
 
 def movingcharacter():
           while character.is_alive == True: 
