@@ -171,14 +171,27 @@ class Character(Entity):
           self.visited_noble = False
           self.visited_knight = False
 
-     def consuming(self, item):
-          self.health += item.health
-          self.power += item.power
-          self.hunger -= item.hunger
-          self.stamina += item.stamina
-          if item.name in ["vegetable","meat", "bread", "medicine"]:
-               print(f"The {item} has been removed from your inventory")
-               inventory.remove(item)
+     def consuming_food():
+          edible_items = []
+          for food in inventory:
+               if food in ["vegetable", "bread", "medicine", "meat"]:
+                    edible_items.append(food)
+               else: 
+                    pass
+          print("The items that are edible within your inventory are" + ', '.join(edible_items))
+          consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()
+          while True:
+               if consumed_item in edible_items:
+                    print(f"Eating the {consumed_item}...")
+                    character.consuming(consumed_item)
+                    inventory.remove(consumed_item)
+                    print(f"Your inventory consists of a " + ', '.join(inventory))
+                    time.sleep(2)
+                    movingcharacter()
+               elif "exit" in edible_items:
+                    break
+               else:
+                    print("Thats not an option")
      
      def movement(self, direction):
         self.stamina -= 3
@@ -535,7 +548,15 @@ def merchant():
 character = Character(100, True, 10, 100, 0, 0, 100, 11, 8, world_map= world_map)
 
 #Gameplay
-def dametime():         
+def dametime():
+          print("20 years ago...")
+          print("King: GRAB THEM! GRAB THEM ALL! DON'T LET ANY OF THESE FILTHY PEASANTS GET AWAY!")
+          time.sleep(3)
+          print(f"Knights: COME HERE YOU PILE OF FILTH. \x1B[3m{namechosen} gets grabbed\x1B[23m")
+          time.sleep(3)
+          print(f"{namechosen}'s Mother: NOO! LEAVE {namechosen.upper()} ALONE! ") 
+          time.sleep(1.5)
+          print("\x1B[3mKnight aggresively drops {namechosen} and grabs the mother")
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
           character.consuming(item=knife)
@@ -544,9 +565,18 @@ def dametime():
 def movingcharacter():
           while character.is_alive == True: 
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
-               options = input("Select one of the following commands:\nshowmap move inventory exit\nChoice: ").strip().lower()   
+               options = input("Select one of the following commands:\nshowmap move inventory eat exit\nChoice: ").strip().lower()   
                if "inventory" in options:
-                    print(f"Your inventory consists of a " + ', '.join(inventory))                
+                    print(f"Your inventory consists of a " + ', '.join(inventory)) 
+               elif "eat" in options:
+                    print(f"Your inventory consists of a " + ', '.join(inventory))
+                    eaten = input("What would you like to consume?").strip().lower()
+                    if eaten in inventory: 
+                         #inventory.remove(eaten)
+                         character.consuming(items_dictionary[eaten])
+                    else:
+                         print("You do not currently have this item in your inventory")
+
                elif "showmap" in options:
                     print_world_map(world_map,character)
                elif "move" in options:
