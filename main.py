@@ -556,13 +556,27 @@ character = Character(100, True, 10, 100, 0, 0, 100, 11, 8, world_map= world_map
 #Gameplay
 def dametime():
           print("20 years ago...")
-          print("King: GRAB THEM! GRAB THEM ALL! DON'T LET ANY OF THESE FILTHY PEASANTS GET AWAY!")
+          print("KING: GRAB THEM! GRAB THEM ALL! DON'T LET ANY OF THESE FILTHY PEASANTS GET AWAY!")
           time.sleep(3)
-          print(f"Knights: COME HERE YOU PILE OF FILTH. \x1B[3m{namechosen} gets grabbed\x1B[23m")
+          print(f"KNIGHTS: COME HERE YOU PILE OF FILTH. \x1B[3m{namechosen} gets grabbed\x1B[23m")
           time.sleep(3)
-          print(f"{namechosen}'s Mother: NOO! LEAVE {namechosen.upper()} ALONE! ") 
-          time.sleep(1.5)
-          print(f"\x1B[3mKnight aggresively drops {namechosen} and grabs the mother")
+          print(f"{namechosen.upper()}'s MOTHER: NOO! LEAVE {namechosen.upper()} ALONE! ") 
+          time.sleep(1.5)        
+          print(f"\x1B[3mKnight aggresively drops {namechosen} and grabs the mother\x1B[23m")
+          time.sleep(2)
+          print(f"{namechosen.upper()}: MOTHER NOOOO!")
+          time.sleep(1)
+          print(f"{namechosen.upper()}'s MOTHER: Don't worry my child... you shall be king one day...")
+          time.sleep(7)
+          clear()
+          print("PRESENT DAY...")
+          print(f"""\x1B[3mAs {namechosen}'s mother was taken away to be killed by the king 20 years ago. \x1B[23m
+The words of {namechosen}'s mother had always had a place in his heart. 
+{namechosen} promised... he will become the king of the castle. 
+After years of training and preparation and drawing out a map and plan to acheive his goal. 
+He was finally ready. \x1B[23m""")
+          
+          input("Press Enter to continue into game: ")
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
           character.consuming(item=knife)
