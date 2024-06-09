@@ -223,11 +223,11 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                     clear()
                     merchant()
                if (self.x, self.y) == (17,15) and self.visited_noble == False:
-                    attackingfunction("Noble")     
                     self.visited_noble = True
+                    attackingfunction("Noble")     
                if (self.x, self.y) in [(17,14), (16,15), (17,16), (18,15)] and self.visited_knight == False:
-                    attackingfunction("Knight")
                     self.visited_knight = True
+                    attackingfunction("Knight")              
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
                     if "crown" or "royal mantle" in inventory:
@@ -557,8 +557,29 @@ def merchant():
                     break    
           else:
                print("Thats not an option")  
-               time.sleep(1.5)                       
-                      
+               time.sleep(1.5)   
+
+def consuming_food():
+          edible_items = []        
+          for food in inventory:
+               if food in ["vegetable", "bread", "medicine", "meat"]:
+                    edible_items.append(food)
+               else: 
+                    pass
+          print("The items that are edible within your inventory are" + ', '.join(edible_items))
+          consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()
+          while True:
+               if consumed_item in edible_items:
+                    print(f"Eating the {consumed_item}...")
+                    inventory.remove(items_dictionary[consumed_item])
+                    character.consuming(consumed_item)
+                    print(f"Your inventory consists of a " + ', '.join(inventory))
+                    time.sleep(2)
+                    movingcharacter()
+               elif "exit" in edible_items:
+                    movingcharacter()
+               else:
+                    print("Thats not an option")                   
 
 character = Character(100, True, 500, 100, 0, 0, 100, 17, 16, world_map= world_map)
 
@@ -597,13 +618,7 @@ def movingcharacter():
                if "inventory" in options:
                     print(f"Your inventory consists of a " + ', '.join(inventory)) 
                elif "eat" in options:
-                    print(f"Your inventory consists of a " + ', '.join(inventory))
-                    eaten = input("What would you like to consume?").strip().lower()
-                    if eaten in inventory: 
-                         character.consuming(items_dictionary[eaten])
-                    else:
-                         print("You do not currently have this item in your inventory")
-
+                    consuming_food()
                elif "showmap" in options:
                     print_world_map(world_map,character)
                elif "move" in options:
@@ -644,5 +659,4 @@ def movingcharacter():
 startermenu()
 nameselection()
 dametime()
-
 
