@@ -1,8 +1,6 @@
-
-
 import os, time, random
 
-inventory = []
+inventory = ["key"]
 
 #Adding a clear function
 def clear():
@@ -232,6 +230,23 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                     self.visited_knight = True
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
+                    if "crown" or "royal mantle" in inventory:
+                         clear()
+                         print("KING: NOOOO! You have dethroned me!") 
+                         time.sleep(3)
+                         clear()
+                         print("YOU WON 👑🤴")
+                         runitback = input("Type and Enter 'm' to go back to main menu or 'q' to quit")
+                         if runitback == "q":
+                              exit
+                         elif runitback == "m":
+                              startermenu()
+                              nameselection()
+                              dametime()
+                         else: 
+                              print("Try again. You have entered an invalid input. ")
+                         
+
 
                cell = self.world_map.get_cell(self.x, self.y)
                if cell and cell.area:
@@ -340,7 +355,6 @@ class Enemy(Entity):
                movingcharacter()
           if loot == "sword":
                print("Your knife is thrown away")
-               #character.consuming(item=sword)
                inventory.remove("knife")
                character.power -= 20
                character.stamina -= 10
@@ -348,7 +362,6 @@ class Enemy(Entity):
                movingcharacter()
           if loot == "armour":
                character.max_health = 200
-               #character.consuming(item=armour)
                inventory_function("armour")
                movingcharacter()
           
@@ -360,10 +373,10 @@ tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_nam
 bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"])
 stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"])
 citizen_names = ["Jack", "Fred", "Amelia"]
-citizen = Enemy(health=30, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None])
-knight = Enemy(health=100, is_alive=True, power=80, enemy_name="Knight", loot_options=["armour", "sword", "helmet"])
-noble = Enemy(health=200, is_alive=True, power=100, enemy_name="Noble", loot_options=["land", "key"])
-king = Enemy(health=3000, is_alive=True, power=300, enemy_name="King", loot_options=["crown", "royal mantle"])
+citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None])
+knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword", "helmet"])
+noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["land", "key"])
+king = Enemy(health=500, is_alive=True, power=60, enemy_name="King", loot_options=["crown", "royal mantle"])
 
 all_enemy_dict = {
     "Tiger": tiger,
@@ -547,30 +560,7 @@ def merchant():
                time.sleep(1.5)                       
                       
 
-
-"""def consuming_food():
-          edible_items = []        
-          for food in inventory:
-               if food in ["vegetable", "bread", "medicine", "meat"]:
-                    edible_items.append(food)
-               else: 
-                    pass
-          print("The items that are edible within your inventory are" + ', '.join(edible_items))
-          consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()
-          while True:
-               if consumed_item in edible_items:
-                    print(f"Eating the {consumed_item}...")
-                    inventory.remove(items_dictionary[consumed_item])
-                    character.consuming(consumed_item)
-                    print(f"Your inventory consists of a " + ', '.join(inventory))
-                    time.sleep(2)
-                    movingcharacter()
-               elif "exit" in edible_items:
-                    break
-               else:
-                    print("Thats not an option")"""
-
-character = Character(100, True, 10, 100, 0, 0, 100, 6, 3, world_map= world_map)
+character = Character(100, True, 500, 100, 0, 0, 100, 17, 16, world_map= world_map)
 
 #Gameplay
 def dametime():
@@ -598,9 +588,7 @@ He was finally ready. \x1B[23m""")
           clear()
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
-          #character.consuming(item=knife)
           movingcharacter()
-
 
 def movingcharacter():
           while character.is_alive == True: 
@@ -612,7 +600,6 @@ def movingcharacter():
                     print(f"Your inventory consists of a " + ', '.join(inventory))
                     eaten = input("What would you like to consume?").strip().lower()
                     if eaten in inventory: 
-                         #inventory.remove(eaten)
                          character.consuming(items_dictionary[eaten])
                     else:
                          print("You do not currently have this item in your inventory")
@@ -657,3 +644,5 @@ def movingcharacter():
 startermenu()
 nameselection()
 dametime()
+
+
