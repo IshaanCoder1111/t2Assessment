@@ -224,10 +224,19 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                     merchant()
                if (self.x, self.y) == (17,15) and self.visited_noble == False:
                     self.visited_noble = True
+                    clear()
+                    time.sleep(1)
+                    print("""NOBLE: Ha! You really think you can get the key from me! How silly of you. 
+       You'll never avenge your mother. I was able to take her life 20 years ago. 
+       Now I'll take yours.""")
+                    input("Press Enter to Continue")
+                    clear()
                     attackingfunction("Noble")     
                if (self.x, self.y) in [(17,14), (16,15), (17,16), (18,15)] and self.visited_knight == False:
                     self.visited_knight = True
-                    attackingfunction("Knight")              
+                    print("""KNIGHT: HEY! WHAT IS A PEASANT DOING IN THE ESTATE?!?! """)  
+                    input("Press Enter to Continue: ")
+                    attackingfunction("Knight")            
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
                     if "crown" or "royal mantle" in inventory:
@@ -659,4 +668,3 @@ def movingcharacter():
 startermenu()
 nameselection()
 dametime()
-
