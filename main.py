@@ -301,7 +301,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
             enemy_var = all_enemy_dict[enemy_var]
           hitormiss2 = random.randint(1,2)
           if hitormiss2 == 1:
-            print(f"{namechosen} has missed their attack")
+            print(f"{namechosen} has missed their attack, oh no!")
             time.sleep(1.5)
             enemy_var.attacking(enemy_var=enemy_var)
           if hitormiss2 == 2:
@@ -316,7 +316,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
 
      def status_check(self, enemy_var):
           if self.health <= 0:
-               print(f"{namechosen} has been vanquished")
+               print(f"{namechosen} has been vanquished, game over🥲")
                self.is_alive = False
                endgame()
           if self.health > 0:
@@ -327,17 +327,18 @@ Now what would you like to do, if you buy an item I promise not to tell the king
 
 
 class Enemy(Entity):
-     def __init__(self, health, is_alive, power, enemy_name, loot_options):
+     def __init__(self, health, is_alive, power, enemy_name, loot_options, type_move):
           super().__init__(health, is_alive, power)
           self.enemy_name = enemy_name
           self.loot_options = loot_options
+          self.type_move = type_move
      
      def __str__(self):       
           return self.enemy_name
 
      def check_status(self, enemy_var):
           if self.health <= 0:
-               print(f"{enemy_var} has been vanquished by {namechosen}, congrats")
+               print(f"{enemy_var} has been vanquished by {namechosen}, congrats soldier!")
                self.is_alive = False
                self.items_dropped()
           if self.health > 0:
@@ -348,11 +349,12 @@ class Enemy(Entity):
      def attacking(self, enemy_var):
         hitormiss = random.randint(1,2)
         if hitormiss == 1:
-            print(f"{enemy_var} has missed their attack")
+            print(f"{enemy_var} has missed their attack, this is your chance {namechosen}!")
             time.sleep(1.5)
             character.attacking(enemy_var=enemy_var)
         if hitormiss == 2:
-            print(f"{enemy_var} has hit the {namechosen} for {self.power} damage")
+            enemy_move = random.choice(self.type_move)
+            print(f"{enemy_var} has hit the {namechosen} with {enemy_move} for {self.power} damage, ow!")
             time.sleep(1.5)
             character.damage_taken(damage=self.power, enemy_var=enemy_var)
                        
@@ -395,14 +397,14 @@ class Enemy(Entity):
 
 
 
-tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=[None, "meat"])
-bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"])
-stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"])
+tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=[None, "meat"], type_move=["Scratch", "Bite"])
+bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"], type_move=["Scratch", "Tackle"])
+stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"], type_move=["Rabies", "Bite", "Scratch"])
 citizen_names = ["Jack", "Fred", "Amelia"]
-citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None])
-knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword", "helmet"])
-noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["land", "key"])
-king = Enemy(health=500, is_alive=True, power=60, enemy_name="King", loot_options=["crown", "royal mantle"])
+citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None], type_move=["Slap", "Punch", "Kick", "Choke"])
+knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword", "helmet"], type_move=["Stab", "Slash"])
+noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["land", "key"], type_move=["Money Shower", "Dollar Roller", "Cash Slam"])
+king = Enemy(health=500, is_alive=True, power=60, enemy_name="King", loot_options=["crown", "royal mantle"], type_move=["Fireball", "Ice Spray"])
 
 all_enemy_dict = {
     "Tiger": tiger,
