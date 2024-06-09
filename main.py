@@ -1,6 +1,21 @@
 import os, time, random
 
-inventory = ["key"]
+inventory = {
+    "bread": 0,
+    "armour": 0,
+    "meat": 0,
+    "coin": 0,
+    "vegetable": 0,
+    "knife": 0,
+    "jewellery": 0,
+    "wine glass": 0,
+    "medicine": 0,
+    "oil": 0,
+    "sword": 0,
+    "land ownership": 0,
+    "wine": 0,
+    "key": 0
+}
 
 #Adding a clear function
 def clear():
@@ -61,12 +76,14 @@ def endgame():
           exit()
 
 def inventory_function(item_received):
-     print("Item received")
-     inventory.append(item_received.lower())
-     if item_received == "coin":
-          character.money += coin.value
-          inventory.remove("coin")
-     print(f"Your inventory consists of a " + ', '.join(inventory))   
+    print("Item received")
+    inventory[item_received.lower()] += 1
+    if item_received == "coin":
+        character.money += items_dictionary["coin"].value
+        inventory["coin"] -= 1
+    print("Your inventory consists of:")
+    for item, quantity in inventory.items():
+        print(f"{item.upper()}: {quantity}")  
 
 class Cell:
     def __init__(self):
@@ -284,7 +301,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
             enemy_var = all_enemy_dict[enemy_var]
           hitormiss2 = random.randint(1,2)
           if hitormiss2 == 1:
-            print(f"{namechosen} has missed their attack, oh no!")
+            print(f"{namechosen} has missed their attack")
             time.sleep(1.5)
             enemy_var.attacking(enemy_var=enemy_var)
           if hitormiss2 == 2:
@@ -299,7 +316,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
 
      def status_check(self, enemy_var):
           if self.health <= 0:
-               print(f"{namechosen} has been vanquished, game over🥲")
+               print(f"{namechosen} has been vanquished")
                self.is_alive = False
                endgame()
           if self.health > 0:
@@ -310,18 +327,17 @@ Now what would you like to do, if you buy an item I promise not to tell the king
 
 
 class Enemy(Entity):
-     def __init__(self, health, is_alive, power, enemy_name, loot_options, type_move):
+     def __init__(self, health, is_alive, power, enemy_name, loot_options):
           super().__init__(health, is_alive, power)
           self.enemy_name = enemy_name
           self.loot_options = loot_options
-          self.type_move = type_move
      
      def __str__(self):       
           return self.enemy_name
 
      def check_status(self, enemy_var):
           if self.health <= 0:
-               print(f"{enemy_var} has been vanquished by {namechosen}, congrats soldier!")
+               print(f"{enemy_var} has been vanquished by {namechosen}, congrats")
                self.is_alive = False
                self.items_dropped()
           if self.health > 0:
@@ -332,12 +348,11 @@ class Enemy(Entity):
      def attacking(self, enemy_var):
         hitormiss = random.randint(1,2)
         if hitormiss == 1:
-            print(f"{enemy_var} has missed their attack, this is your chance {namechosen}!")
+            print(f"{enemy_var} has missed their attack")
             time.sleep(1.5)
             character.attacking(enemy_var=enemy_var)
         if hitormiss == 2:
-            enemy_move = random.choice(self.type_move)
-            print(f"{enemy_var} has hit the {namechosen} with {enemy_move} for {self.power} damage, ow!")
+            print(f"{enemy_var} has hit the {namechosen} for {self.power} damage")
             time.sleep(1.5)
             character.damage_taken(damage=self.power, enemy_var=enemy_var)
                        
@@ -380,14 +395,14 @@ class Enemy(Entity):
 
 
 
-tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=[None, "meat"], type_move=["Scratch", "Bite"])
-bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"], type_move=["Scratch", "Tackle"])
-stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"], type_move=["Rabies", "Bite", "Scratch"])
+tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=[None, "meat"])
+bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"])
+stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"])
 citizen_names = ["Jack", "Fred", "Amelia"]
-citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None], type_move=["Slap", "Punch", "Kick", "Choke"])
-knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword", "helmet"], type_move=["Stab", "Slash"])
-noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["land", "key"], type_move=["Money Shower", "Dollar Roller", "Cash Slam"])
-king = Enemy(health=500, is_alive=True, power=60, enemy_name="King", loot_options=["crown", "royal mantle"], type_move=["Fireball", "Ice Spray"])
+citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None])
+knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword", "helmet"])
+noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["land", "key"])
+king = Enemy(health=500, is_alive=True, power=60, enemy_name="King", loot_options=["crown", "royal mantle"])
 
 all_enemy_dict = {
     "Tiger": tiger,
@@ -446,9 +461,6 @@ items_dictionary = {
     "wine": wine,
     "key": key
 }
-
-
-
 
 def barren_enemy_detection(character, cell):
      enemychances = ["Stray Dog", "Citizen", None, None, None, None, None,]
@@ -517,64 +529,64 @@ def merchant():
         clear()
         print("WELCOME TO THE MERCHANT!")
         character_choice = input("Would you like to 'buy', 'sell', or 'exit'? ").strip().lower()
+
         if character_choice == "sell":
             while True:
                 clear()
-                print(f"Your inventory consists of: " + ', '.join(inventory))
-                item_sell = input("What would you like to sell, or would you like to exit selling: ").strip().lower()
-                if item_sell in inventory:
-                    if item_sell in ["armour", "knife", "sword", "helmet", "key"]:
-                        print(f"Sorry, you are not able to sell your {item_sell}")
-                        time.sleep(1.5)
-                    else:
-                        inventory.remove(item_sell)
-                        item_addvalue = items_dictionary[item_sell].value
-                        character.money += item_addvalue
-                        print(f"You have successfully sold the {item_sell}")
-                        print(f"Your inventory consists of: " + ', '.join(inventory))
-                        input("Press enter to continue: ")
-                        break
-                elif item_sell == "exit":
-                    print("Exiting the selling area")
-                    time.sleep(1.5)
+                print("What would you like to sell?")
+                print("Your inventory:")
+                for item, quantity in inventory.items():
+                    if quantity > 0:
+                        print(f"{item.capitalize()}: {quantity}")
+                item_to_sell = input("Enter the item name (or type 'back' to return): ").strip().lower()
+                if item_to_sell == "back":
                     break
+                elif item_to_sell in inventory and inventory[item_to_sell] > 0:
+                    sell_price = items_dictionary[item_to_sell].value
+                    print(f"Selling {item_to_sell} for {sell_price} coins.")
+                    confirm = input("Confirm sale? (yes/no): ").strip().lower()
+                    if confirm == "yes":
+                        inventory[item_to_sell] -= 1
+                        character.money += sell_price
+                        print(f"You sold {item_to_sell} for {sell_price} coins.")
+                    else:
+                        print("Sale canceled.")
                 else:
-                    print(f"You don't currently have {item_sell}")
-                    time.sleep(1.5)
+                    print("Item not in inventory or you don't have any.")
+                time.sleep(1.5)
+
         elif character_choice == "buy":
             while True:
                 clear()
-                print("Items available for purchase:")
-                for item, item_obj in items_dictionary.items():
-                    if item_obj.value > 0:
-                        print(f"{item.capitalize()} - {item_obj.value} coins")
-                print(f"You currently have {character.money} coins.")
-                item_buy = input("What would you like to buy, or would you like to exit buying: ").strip().lower()
-                if item_buy in items_dictionary:
-                    item_value = items_dictionary[item_buy].value
-                    if character.money >= item_value:
-                        character.money -= item_value
-                        inventory.append(item_buy)
-                        print(f"You have successfully bought the {item_buy}")
-                        print(f"You have {character.money} coins left.")
-                        input("Press enter to continue: ")
-                        break
-                    else:
-                        print("You do not have enough money to buy this item.")
-                        time.sleep(1.5)
-                elif item_buy == "exit":
-                    print("Exiting the buying area")
-                    time.sleep(1.5)
+                print("What would you like to buy?")
+                for item, details in items_dictionary.items():
+                    if item != "coin":
+                        print(f"{item.capitalize()} - {details.value} coins")
+                print(f"Your money: {character.money} coins")
+                item_to_buy = input("Enter the item name (or type 'back' to return): ").strip().lower()
+                if item_to_buy == "back":
                     break
+                elif item_to_buy in items_dictionary:
+                    buy_price = items_dictionary[item_to_buy].value
+                    if character.money >= buy_price:
+                        print(f"Buying {item_to_buy} for {buy_price} coins.")
+                        confirm = input("Confirm purchase? (yes/no): ").strip().lower()
+                        if confirm == "yes":
+                            inventory_function(item_to_buy)
+                            character.money -= buy_price
+                            print(f"You bought {item_to_buy} for {buy_price} coins.")
+                        else:
+                            print("Purchase canceled.")
+                    else:
+                        print("Not enough coins.")
                 else:
-                    print(f"{item_buy} is not available for purchase.")
-                    time.sleep(1.5)
+                    print("Item not available.")
+                time.sleep(1.5)
+
         elif character_choice == "exit":
-            print("Leaving the merchant area")
-            time.sleep(1.5)
             break
         else:
-            print("Invalid choice, please try again.")
+            print("Invalid choice. Please type 'buy', 'sell', or 'exit'.")
             time.sleep(1.5)
 
 def consuming_food():
