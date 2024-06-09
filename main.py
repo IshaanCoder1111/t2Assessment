@@ -284,7 +284,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
             enemy_var = all_enemy_dict[enemy_var]
           hitormiss2 = random.randint(1,2)
           if hitormiss2 == 1:
-            print(f"{namechosen} has missed their attack")
+            print(f"{namechosen} has missed their attack, oh no!")
             time.sleep(1.5)
             enemy_var.attacking(enemy_var=enemy_var)
           if hitormiss2 == 2:
@@ -299,7 +299,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
 
      def status_check(self, enemy_var):
           if self.health <= 0:
-               print(f"{namechosen} has been vanquished")
+               print(f"{namechosen} has been vanquished, game over🥲")
                self.is_alive = False
                endgame()
           if self.health > 0:
@@ -321,7 +321,7 @@ class Enemy(Entity):
 
      def check_status(self, enemy_var):
           if self.health <= 0:
-               print(f"{enemy_var} has been vanquished by {namechosen}, congrats")
+               print(f"{enemy_var} has been vanquished by {namechosen}, congrats soldier!")
                self.is_alive = False
                self.items_dropped()
           if self.health > 0:
@@ -332,12 +332,12 @@ class Enemy(Entity):
      def attacking(self, enemy_var):
         hitormiss = random.randint(1,2)
         if hitormiss == 1:
-            print(f"{enemy_var} has missed their attack")
+            print(f"{enemy_var} has missed their attack, this is your chance {namechosen}!")
             time.sleep(1.5)
             character.attacking(enemy_var=enemy_var)
         if hitormiss == 2:
             enemy_move = random.choice(self.type_move)
-            print(f"{enemy_var} has hit the {namechosen} with {enemy_move} for {self.power} damage")
+            print(f"{enemy_var} has hit the {namechosen} with {enemy_move} for {self.power} damage, ow!")
             time.sleep(1.5)
             character.damage_taken(damage=self.power, enemy_var=enemy_var)
                        
