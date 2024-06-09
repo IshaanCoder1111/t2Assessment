@@ -126,7 +126,7 @@ Barren_Land = Area("Barren Land", "Uninhabited Land.", barren_land_coordinates, 
 
 world_map.add_area(Barren_Land)
 
-def print_world_map(world_map, character):
+"""def print_world_map(world_map, character):
     for y in range(world_map.height):
         for x in range(world_map.width):
             cell = world_map.get_cell(x, y)
@@ -136,7 +136,15 @@ def print_world_map(world_map, character):
                 print(cell.area.name[0], end=' ')
             else:
                 print('.', end=' ')
-        print()
+        print()"""
+
+def print_world_map(world_map, character):
+     import cv2
+     img = cv2.imread("Map.png")
+     cv2.imshow('map', img)
+     cv2.waitKey(0) 
+     cv2.destroyAllWindows()
+
 
 def attackingfunction(enemy):
      while True:
@@ -180,12 +188,15 @@ class Character(Entity):
           if item.name in ["vegetable","meat", "bread", "medicine"]:
                print(f"The {item} has been removed from your inventory")
                inventory.remove(item.name)
+               if self.health > self.max_health:
+                    self.health = self.max_health
           else:
                print("What a silly try, you cannot consume this item")
                self.health -= item.health 
                self.power -= item.power
                self.hunger -= item.hunger
                self.stamina -= item.stamina
+
      
      def movement(self, direction):
         self.stamina -= 3
@@ -589,8 +600,7 @@ He was finally ready. \x1B[23m""")
           inventory_function("knife")
           #character.consuming(item=knife)
           movingcharacter()
-          """if character.health > character.max_health:
-               character.health == character.max_health"""
+
 
 def movingcharacter():
           while character.is_alive == True: 
@@ -635,12 +645,12 @@ def movingcharacter():
                elif "exit" in options:
                     quitting = input("Are you sure you would like to exit the game, if you type yes your progress will not be saved and you will exit or type no to cancel.") 
                     if quitting == "yes":
-                         break
+                         import sys
+                         sys.exit("Exiting the game")
                     elif quitting == "no":
                          movingcharacter()
                     else:
                          print("That is an invalid option. Type either yes or no.")
-                         quitting = input("Are you sure you would like to exit the game, if you type yes your progress will not be saved and you will exit or type no to cancel.")  
                else:
                     print("This is not an option")
 
