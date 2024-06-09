@@ -511,62 +511,68 @@ def collect_items_estate(character, cell):
 
 
 def merchant():
-     while True:
-          clear()
-          print("WELCOME TO THE MERCHANT!")
-          character_choicemerchant = input("Would you like to 'buy', 'sell', or 'exit'? ").strip().lower()
-          if "sell" in character_choicemerchant:
-               while True:
-                    clear()
-                    print(f"Your inventory consists of a " + ', '.join(inventory))
-                    item_sell = input("What would you like to sell, or would you like to exit selling: ").strip().lower()
-                    if item_sell in inventory:
-                         if item_sell in ["armour", "knife", "sword", "helmet","key:"]:
-                              print(f"Sorry you are not able to sell your {item_sell}")
-                         else:          
-                              inventory.remove(item_sell)
-                              item_addvalue = items_dictionary[item_sell].value
-                              Character.money += item_addvalue
-                              print(f"You have successfully sold the {item_sell}")
-                              print(f"Your inventory consists of a " + ', '.join(inventory))    
-                              input("Press enter to continue: ")
-                              break
-                    elif "exit" in item_sell:
-                         print("Exiting the selling area")
-                         time.sleep(1.5)
-                         break
+    while True:
+        clear()
+        print("WELCOME TO THE MERCHANT!")
+        character_choice = input("Would you like to 'buy', 'sell', or 'exit'? ").strip().lower()
+        if character_choice == "sell":
+            while True:
+                clear()
+                print(f"Your inventory consists of: " + ', '.join(inventory))
+                item_sell = input("What would you like to sell, or would you like to exit selling: ").strip().lower()
+                if item_sell in inventory:
+                    if item_sell in ["armour", "knife", "sword", "helmet", "key"]:
+                        print(f"Sorry, you are not able to sell your {item_sell}")
                     else:
-                         print(f"You don't currently have {item_sell}")
-                         time.sleep(1.5)
-
-          elif "buy" in character_choicemerchant:
-               while True:
-                    print("These are our current items available")
-                    print("Vegetable, Meat, Bread, Medicine")
-                    item_buy = input("Based on these items what would you like to buy, or would you like to exit buying ").strip().lower()
-                    if item_buy in ["medicine", "vegetable", "meat", "bread"]:
-                         item_var = items_dictionary[item_buy]
-                         if character.money >= item_var.value:
-                              inventory_function(item_buy)
-                              character.money -= item_var.value
-                         else:
-                              print(f"You don't have enough money for {item_buy}")
-                    elif "exit" in item_buy:
-                         print("Exiting the buying area")
-                         time.sleep(1.5)
-                         break
-                    else:
-                         print(f"{item_buy} is not currently in our store, sorry for the inconvenience")
-
-          elif "exit" in character_choicemerchant:
-                    print("Exiting the merchant")
+                        inventory.remove(item_sell)
+                        item_addvalue = items_dictionary[item_sell].value
+                        character.money += item_addvalue
+                        print(f"You have successfully sold the {item_sell}")
+                        print(f"Your inventory consists of: " + ', '.join(inventory))
+                        input("Press enter to continue: ")
+                        break
+                elif item_sell == "exit":
+                    print("Exiting the selling area")
                     time.sleep(1.5)
-                    clear()
-                    movingcharacter()
-                    break    
-          else:
-               print("Thats not an option")  
-               time.sleep(1.5)   
+                    break
+                else:
+                    print(f"You don't currently have {item_sell}")
+                    time.sleep(1.5)
+        elif character_choice == "buy":
+            while True:
+                clear()
+                print("Items available for purchase:")
+                for item, item_obj in items_dictionary.items():
+                    if item_obj.value > 0:
+                        print(f"{item.capitalize()} - {item_obj.value} coins")
+                print(f"You currently have {character.money} coins.")
+                item_buy = input("What would you like to buy, or would you like to exit buying: ").strip().lower()
+                if item_buy in items_dictionary:
+                    item_value = items_dictionary[item_buy].value
+                    if character.money >= item_value:
+                        character.money -= item_value
+                        inventory.append(item_buy)
+                        print(f"You have successfully bought the {item_buy}")
+                        print(f"You have {character.money} coins left.")
+                        input("Press enter to continue: ")
+                        break
+                    else:
+                        print("You do not have enough money to buy this item.")
+                        time.sleep(1.5)
+                elif item_buy == "exit":
+                    print("Exiting the buying area")
+                    time.sleep(1.5)
+                    break
+                else:
+                    print(f"{item_buy} is not available for purchase.")
+                    time.sleep(1.5)
+        elif character_choice == "exit":
+            print("Leaving the merchant area")
+            time.sleep(1.5)
+            break
+        else:
+            print("Invalid choice, please try again.")
+            time.sleep(1.5)
 
 def consuming_food():
           edible_items = []        
@@ -590,7 +596,7 @@ def consuming_food():
                else:
                     print("Thats not an option")                   
 
-character = Character(100, True, 500, 100, 0, 0, 100, 17, 16, world_map= world_map)
+character = Character(100, True, 10, 100, 0, 0, 100, 10, 3, world_map= world_map)
 
 #Gameplay
 def dametime():
