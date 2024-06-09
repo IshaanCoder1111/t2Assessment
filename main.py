@@ -1,21 +1,21 @@
 import os, time, random
 
 inventory = {
-    "bread": 0,
-    "armour": 0,
-    "meat": 0,
-    "coin": 0,
-    "vegetable": 0,
-    "knife": 0,
-    "jewellery": 0,
-    "wine glass": 0,
-    "medicine": 0,
-    "oil": 0,
-    "sword": 0,
-    "land ownership": 0,
-    "wine": 0,
-    "key": 0
-}
+     "bread": 0,
+     "armour": 0,
+     "meat": 0,
+     "coin": 0,
+     "vegetable": 0,
+     "knife": 0,
+     "jewellery": 0,
+     "wine glass": 0,
+     "medicine": 0,
+     "oil": 0,
+     "sword": 0,
+     "land ownership": 0,
+     "wine": 0,
+     "key": 0
+     }
 
 #Adding a clear function
 def clear():
@@ -648,7 +648,7 @@ def movingcharacter():
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
                options = input("Select one of the following commands:\nshowmap move inventory eat exit\nChoice: ").strip().lower()   
                if "inventory" in options:
-                    print(f"Your inventory consists of a " + ', '.join(inventory)) 
+                    print(f"This is your current inventory {inventory}") 
                elif "eat" in options:
                     consuming_food()
                elif "showmap" in options:
