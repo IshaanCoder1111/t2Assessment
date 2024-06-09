@@ -523,6 +523,7 @@ def merchant():
                 if item_sell in inventory:
                     if item_sell in ["armour", "knife", "sword", "helmet", "key"]:
                         print(f"Sorry, you are not able to sell your {item_sell}")
+                        time.sleep(1.5)
                     else:
                         inventory.remove(item_sell)
                         item_addvalue = items_dictionary[item_sell].value
