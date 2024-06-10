@@ -611,27 +611,31 @@ def merchant():
             print("Invalid choice. Please type 'buy', 'sell', or 'exit'.")
             time.sleep(1.5)
 
-def consuming_food():
-          edible_items = []        
-          for food in inventory:
-               if food in ["vegetable", "bread", "medicine", "meat"]:
-                    edible_items.append(food)
+def consuming_food(): 
+          for food, quantity in inventory:
+               if quantity > 0 and food in ["bread", "medicine", "vegetable,", "meat"]:
+                    print(f"{food.capitalize()}: {quantity}")        
                else: 
                     pass
-          print("The items that are edible within your inventory are" + ', '.join(edible_items))
-          consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()
+          print("These are your current edible items")
           while True:
-               if consumed_item in edible_items:
-                    print(f"Eating the {consumed_item}...")
-                    #inventory.remove(items_dictionary[consumed_item])
-                    character.consuming(consumed_item)
-                    print(f"This is your current inventory {inventory}") 
-                    time.sleep(2)
+               consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()      
+               if consumed_item in ["bread", "medicine", "vegetable,", "meat"] :
+                    if inventory[consumed_item] > 0:
+                         print(f"Eating the {consumed_item}...")
+                         inventory[consumed_item] -= 1
+                         character.consuming(consumed_item)
+                         print(f"This is your current inventory {inventory}") 
+                         time.sleep(2)
+                         movingcharacter()
+                    else:
+                         print(f"You don't have enough of {consumed_item}")
+               elif "exit" in consumed_item:
                     movingcharacter()
-               elif "exit" in edible_items:
-                    movingcharacter()
+    
                else:
-                    print("Thats not an option")                   
+                    print("Thats not an option")
+                             
 
 character = Character(100, True, 10, 100, 0, 0, 100, 6, 3, world_map= world_map)
 
