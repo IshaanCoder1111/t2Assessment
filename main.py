@@ -194,23 +194,43 @@ class Character(Entity):
           self.world_map = world_map
           self.visited_noble = False
           self.visited_knight = False
-
+    
      def consuming(self, item):
-          self.health += item.health
-          self.power += item.power
-          self.hunger += item.hunger
-          self.stamina += item.stamina
-          if item.name in ["vegetable","meat", "bread", "medicine"]:
-               print(f"The {item} has been removed from your inventory")
-               inventory.remove(item.name)
+          if isinstance(item, dict):
+               # Assuming item is a dictionary
+               health = item.get('health', 0)
+               power = item.get('power', 0)
+               hunger = item.get('hunger', 0)
+               stamina = item.get('stamina', 0)
+               name = item.get('name', 'Unknown Item')
+          else:
+               # Assuming item is an object of some class
+               health = getattr(item, 'health', 0)
+               power = getattr(item, 'power', 0)
+               hunger = getattr(item, 'hunger', 0)
+               stamina = getattr(item, 'stamina', 0)
+               name = getattr(item, 'name', 'Unknown Item')
+
+          self.health += health
+          self.power += power
+          self.hunger += hunger
+          self.stamina += stamina
+
+          if name in ["vegetable", "meat", "bread", "medicine"]:
+               print(f"The {name} has been removed from your inventory")
+               if isinstance(inventory, dict):
+                    inventory[name] -= 1  # Reduce the count of the consumed item in the inventory
+                    if inventory[name] == 0:
+                         del inventory[name]  # Remove the item from the inventory if its count reaches 0
                if self.health > self.max_health:
                     self.health = self.max_health
           else:
                print("What a silly try, you cannot consume this item")
-               self.health -= item.health 
-               self.power -= item.power
-               self.hunger -= item.hunger
-               self.stamina -= item.stamina
+               # Reverse the effect of consuming the item if it's not consumable
+               self.health -= health
+               self.power -= power
+               self.hunger -= hunger
+               self.stamina -= stamina
 
      
      def movement(self, direction):
@@ -603,9 +623,9 @@ def consuming_food():
           while True:
                if consumed_item in edible_items:
                     print(f"Eating the {consumed_item}...")
-                    inventory.remove(items_dictionary[consumed_item])
+                    #inventory.remove(items_dictionary[consumed_item])
                     character.consuming(consumed_item)
-                    print(f"Your inventory consists of a " + ', '.join(inventory))
+                    print(f"This is your current inventory {inventory}") 
                     time.sleep(2)
                     movingcharacter()
                elif "exit" in edible_items:
@@ -613,7 +633,7 @@ def consuming_food():
                else:
                     print("Thats not an option")                   
 
-character = Character(100, True, 10, 100, 0, 0, 100, 10, 3, world_map= world_map)
+character = Character(100, True, 10, 100, 0, 0, 100, 6, 3, world_map= world_map)
 
 #Gameplay
 def dametime():
