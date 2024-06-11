@@ -12,7 +12,7 @@ inventory = {
      "medicine": 0,
      "oil": 0,
      "sword": 0,
-     "land ownership": 0,
+     "land": 0,
      "wine": 0,
      "key": 0
      }
@@ -360,7 +360,13 @@ class Enemy(Entity):
           input(f"Congratulations You Have Acquired The {loot} Item, press enter to continue")      
           if loot == "meat":
                inventory_function("meat")
-               movingcharacter()             
+               movingcharacter()    
+          if loot == "land":
+               inventory_function("land")
+               movingcharacter()
+          if loot == "key":
+               inventory_function("key")
+               movingcharacter()
           if loot == "vegetable":
                inventory_function("vegetable")
                movingcharacter()              
@@ -606,7 +612,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(100, True, 10, 100, 0, 0, 100, 6, 3, world_map= world_map)
+character = Character(100, True, 500, 100, 0, 0, 100, 17, 14, world_map= world_map)
 
 #Gameplay
 def dametime():
