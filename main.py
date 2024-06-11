@@ -14,7 +14,7 @@ inventory = {
      "sword": 0,
      "land": 0,
      "wine": 0,
-     "key": 0
+     "key": 1
      }
 
 #Adding a clear function
@@ -246,21 +246,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                     attackingfunction("Knight")            
                if (self.x, self.y) == (9,10):
                     attackingfunction("King")
-                    if "crown" or "royal mantle" in inventory:
-                         clear()
-                         print("KING: NOOOO! You have dethroned me!") 
-                         time.sleep(3)
-                         clear()
-                         print("YOU WON 👑🤴")
-                         runitback = input("Type and Enter 'm' to go back to main menu or 'q' to quit")
-                         if runitback == "q":
-                              exit
-                         elif runitback == "m":
-                              startermenu()
-                              nameselection()
-                              dametime()
-                         else: 
-                              print("Try again. You have entered an invalid input. ")
+                         
                          
 
 
@@ -378,7 +364,7 @@ class Enemy(Entity):
                movingcharacter()
           if loot == "sword":
                print("Your knife is thrown away")
-               inventory.remove("knife")
+               '''inventory.remove("knife")'''
                character.power -= 20
                character.stamina -= 10
                inventory_function("sword")
@@ -387,6 +373,24 @@ class Enemy(Entity):
                character.max_health = 200
                inventory_function("armour")
                movingcharacter()
+          if loot == "crown":
+               clear()
+               print("KING: NOOOO! You have dethroned me!") 
+               time.sleep(3)
+               clear()
+               print("YOU WON 👑🤴")
+               runitback = input("Type and Enter 'm' to go back to main menu or 'q' to quit")
+               if runitback == "q":
+                    exit
+               elif runitback == "m":
+                    startermenu()
+                    nameselection()
+                    dametime()
+               else: 
+                    print("Try again. You have entered an invalid input. ")
+
+
+
           
           
 
@@ -397,7 +401,7 @@ bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="
 stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"], type_move=["Rabies", "Bite", "Scratch"])
 citizen_names = ["Jack", "Fred", "Amelia"]
 citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None], type_move=["Slap", "Punch", "Kick", "Choke"])
-knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword", "helmet"], type_move=["Stab", "Slash"])
+knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword"], type_move=["Stab", "Slash"])
 noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["land", "key"], type_move=["Money Shower", "Dollar Roller", "Cash Slam"])
 king = Enemy(health=500, is_alive=True, power=60, enemy_name="King", loot_options=["crown", "royal mantle"], type_move=["Fireball", "Ice Spray"])
 
@@ -427,9 +431,9 @@ class Item:
           
      
 
-bread = Item(2, 2, -3, 0, 1, "bread")
+bread = Item(2, 2, -3, 0, 3, "bread")
 armour = Item(10, 0, 0, 30, 100, "armour")
-meat = Item(2, 2, -5, 0, 2, "meat")
+meat = Item(2, 2, -5, 0, 5, "meat")
 coin = Item(0, 0, 0, 1, 0, "coin")
 vegetable = Item(0, 5, -3, 0, 2, "vegetable")
 knife = Item(20, 0, 0, 10, 0, "knife")
@@ -612,7 +616,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(100, True, 500, 100, 0, 0, 100, 17, 14, world_map= world_map)
+character = Character(200, True, 500, 100, 0, 0, 200, 9, 11, world_map=world_map)
 
 #Gameplay
 def dametime():
