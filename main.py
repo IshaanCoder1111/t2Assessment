@@ -196,41 +196,11 @@ class Character(Entity):
           self.visited_knight = False
     
      def consuming(self, item):
-          if isinstance(item, dict):
-               # Assuming item is a dictionary
-               health = item.get('health', 0)
-               power = item.get('power', 0)
-               hunger = item.get('hunger', 0)
-               stamina = item.get('stamina', 0)
-               name = item.get('name', 'Unknown Item')
-          else:
-               # Assuming item is an object of some class
-               health = getattr(item, 'health', 0)
-               power = getattr(item, 'power', 0)
-               hunger = getattr(item, 'hunger', 0)
-               stamina = getattr(item, 'stamina', 0)
-               name = getattr(item, 'name', 'Unknown Item')
+          self.health += item.health
+          self.power += item.power
+          self.hunger += item.hunger
+          self.stamina += item.stamina
 
-          self.health += health
-          self.power += power
-          self.hunger += hunger
-          self.stamina += stamina
-
-          if name in ["vegetable", "meat", "bread", "medicine"]:
-               print(f"The {name} has been removed from your inventory")
-               if isinstance(inventory, dict):
-                    inventory[name] -= 1  # Reduce the count of the consumed item in the inventory
-                    if inventory[name] == 0:
-                         del inventory[name]  # Remove the item from the inventory if its count reaches 0
-               if self.health > self.max_health:
-                    self.health = self.max_health
-          else:
-               print("What a silly try, you cannot consume this item")
-               # Reverse the effect of consuming the item if it's not consumable
-               self.health -= health
-               self.power -= power
-               self.hunger -= hunger
-               self.stamina -= stamina
 
      
      def movement(self, direction):
@@ -343,7 +313,6 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                print(f"{namechosen} has {self.health} hearts left")
                time.sleep(1.5)
                self.attacking(enemy_var=enemy_var)
-
 
 
 class Enemy(Entity):
@@ -612,19 +581,19 @@ def merchant():
             time.sleep(1.5)
 
 def consuming_food(): 
-          for food, quantity in inventory:
-               if quantity > 0 and food in ["bread", "medicine", "vegetable,", "meat"]:
+          print(f"These are your current edible items ")
+          for food, quantity in inventory.items():
+               if quantity > 0 and food in ["bread", "medicine", "vegetable", "meat"]:
                     print(f"{food.capitalize()}: {quantity}")        
                else: 
                     pass
-          print("These are your current edible items")
           while True:
                consumed_item = input("What item would you like to eat, or would you like to exit?: ").strip().lower()      
-               if consumed_item in ["bread", "medicine", "vegetable,", "meat"] :
+               if consumed_item in ["bread", "medicine", "vegetable", "meat"] :
                     if inventory[consumed_item] > 0:
                          print(f"Eating the {consumed_item}...")
                          inventory[consumed_item] -= 1
-                         character.consuming(consumed_item)
+                         character.consuming(items_dictionary[consumed_item])
                          print(f"This is your current inventory {inventory}") 
                          time.sleep(2)
                          movingcharacter()
