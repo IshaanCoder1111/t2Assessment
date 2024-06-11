@@ -194,6 +194,7 @@ class Character(Entity):
           self.world_map = world_map
           self.visited_noble = False
           self.visited_knight = False
+
     
      def consuming(self, item):
           self.health += item.health
@@ -273,6 +274,17 @@ Now what would you like to do, if you buy an item I promise not to tell the king
      def attacking(self, enemy_var):
           self.stamina -= 3
           self.hunger += 3
+          while True:
+               power_move = input("What move would you like to use, Knife Throw or Knife Stab").lower().strip()
+               if "knife throw" in power_move:
+                    power_move = "knife throw"
+                    break
+               if "knife stab" in power_move:
+                    power_move = "knife stab"
+                    break
+               else:
+                    print("Thats not an option")
+                    time.sleep(1)
           if isinstance(enemy_var, str):
             enemy_var = all_enemy_dict[enemy_var]
           hitormiss2 = random.randint(1,2)
@@ -281,7 +293,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
             time.sleep(1.5)
             enemy_var.attacking(enemy_var=enemy_var)
           if hitormiss2 == 2:
-               print(f"{namechosen} has hit the {enemy_var} for {self.power} damage")
+               print(f"{namechosen} has hit the {enemy_var} for {self.power} damage, using {power_move}")
                time.sleep(1.5)
                enemy_var.damage_taken(enemy_var=enemy_var)
       
