@@ -14,7 +14,7 @@ inventory = {
      "sword": 0,
      "land": 0,
      "wine": 0,
-     "key": 1
+     "key": 0
      }
 
 #Adding a clear function
@@ -651,7 +651,8 @@ def movingcharacter():
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
                options = input("Select one of the following commands:\nshowmap move inventory eat exit\nChoice: ").strip().lower()   
                if "inventory" in options:
-                    print(f"This is your current inventory {inventory}") 
+                    print(f"""This is your current inventory:
+                          {inventory}""") 
                elif "eat" in options:
                     consuming_food()
                elif "showmap" in options:
