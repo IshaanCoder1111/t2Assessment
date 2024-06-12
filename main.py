@@ -259,7 +259,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                          self.is_alive = False
                          endgame()
                     if cell.area.name == "Castle":
-                         if "key" in inventory:
+                         if inventory["key"] > 0:
                               print("You have unlocked the gates and have enetered the castle")
                          else:
                               print("You need to get the key from the noble to unlock the gates to the castle.")
@@ -616,7 +616,8 @@ def consuming_food():
                          print(f"Eating the {consumed_item}...")
                          inventory[consumed_item] -= 1
                          character.consuming(items_dictionary[consumed_item])
-                         print(f"This is your current inventory {inventory}") 
+                         print(f"""This is your current inventory:
+                          {inventory}""") 
                          time.sleep(2)
                          movingcharacter()
                     else:
@@ -628,7 +629,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(200, True, 500, 100, 0, 0, 200, 9, 11, world_map=world_map)
+character = Character(200, True, 500, 100, 0, 0, 200, 9, 13, world_map=world_map)
 
 #Gameplay
 def dametime():
