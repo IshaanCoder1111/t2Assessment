@@ -85,6 +85,11 @@ def inventory_function(item_received):
     for item, quantity in inventory.items():
         print(f"{item.upper()}: {quantity}")  
 
+def inventory_print():
+     print("This is your current inventory")
+     for item, quantity in inventory.items():
+          print(f"{item.upper()}: {quantity}") 
+
 class Cell:
     def __init__(self):
         self.area = None
@@ -562,6 +567,7 @@ def merchant():
                         inventory[item_to_sell] -= 1
                         character.money += sell_price
                         print(f"You sold {item_to_sell} for {sell_price} coins.")
+                        inventory_print()
                     else:
                         print("Sale canceled.")
                 else:
@@ -588,6 +594,7 @@ def merchant():
                             inventory_function(item_to_buy)
                             character.money -= buy_price
                             print(f"You bought {item_to_buy} for {buy_price} coins.")
+                            inventory_print()
                         else:
                             print("Purchase canceled.")
                     else:
@@ -615,10 +622,8 @@ def consuming_food():
                     if inventory[consumed_item] > 0:
                          print(f"Eating the {consumed_item}...")
                          inventory[consumed_item] -= 1
-                         character.consuming(items_dictionary[consumed_item])
-                         print(f"""This is your current inventory:
-                          {inventory}""") 
-                         time.sleep(2)
+                         character.consuming(items_dictionary[consumed_item]) 
+                         inventory_print()
                          movingcharacter()
                     else:
                          print(f"You don't have enough of {consumed_item}")
@@ -629,7 +634,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(200, True, 500, 100, 0, 0, 200, 9, 13, world_map=world_map)
+character = Character(200, True, 500, 100, 0, 0, 200, 1, 1, world_map=world_map)
 
 #Gameplay
 def dametime():
