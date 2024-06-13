@@ -448,11 +448,11 @@ class Item:
           
      
 
-bread = Item(2, 2, -3, 1, 3, "bread")
+bread = Item(2, 2, -3, 0, 3, "bread")
 armour = Item(10, 0, 0, 30, 100, "armour")
-meat = Item(2, 2, -5, 2, 5, "meat")
+meat = Item(2, 2, -5, 0, 5, "meat")
 coin = Item(0, 0, 0, 1, 0, "coin")
-vegetable = Item(0, 5, -3, 1, 2,"vegetable")
+vegetable = Item(0, 5, -3, 0, 2, "vegetable")
 knife = Item(20, 0, 0, 10, 0, "knife")
 jewellery = Item(0, 0, 0, 5, 0, "jewellery")
 wineglass = Item(0, 0, 0, 5, 0, "wineglass")
@@ -461,7 +461,7 @@ oil = Item(0, 0, 0, 3, 0, "oil")
 sword = Item(50, 5 , 0, 30, 0, "sword")
 land = Item(0,0,0,50,0,"land ownership") 
 wine = Item(1,-2,-1,5,-2,"wine")
-key = Item(0,0,0,10000,0,"key")
+key = Item(0,0,0,0,0,"key")
 
 items_dictionary = {
     "bread": bread,
@@ -634,7 +634,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(100, True, 20, 100, 0, 0, 200, 11, 2, world_map=world_map)
+character = Character(200, True, 500, 100, 0, 0, 200, 1, 1, world_map=world_map)
 
 #Gameplay
 def dametime():
@@ -669,8 +669,7 @@ def movingcharacter():
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
                options = input("Select one of the following commands:\nshowmap move inventory eat exit\nChoice: ").strip().lower()   
                if "inventory" in options:
-                    print(f"""This is your current inventory:
-                          {inventory}""") 
+                    inventory_print()
                elif "eat" in options:
                     consuming_food()
                elif "showmap" in options:
