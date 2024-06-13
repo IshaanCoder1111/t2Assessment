@@ -277,7 +277,7 @@ Now what would you like to do, if you buy an item I promise not to tell the king
           self.stamina -= 3
           self.hunger += 3
           while True:
-               power_move = input("What move would you like to use, Knife Throw or Knife Stab").lower().strip()
+               power_move = input("What move would you like to use, Knife Throw or Knife Stab?: ").lower().strip()
                if "knife throw" in power_move:
                     power_move = "knife throw"
                     break
