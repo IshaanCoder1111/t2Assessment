@@ -76,14 +76,11 @@ def endgame():
           exit()
 
 def inventory_function(item_received):
-    print("Item received")
     inventory[item_received.lower()] += 1
     if item_received == "coin":
         character.money += items_dictionary["coin"].value
         inventory["coin"] -= 1
-    print("Your inventory consists of:")
-    for item, quantity in inventory.items():
-        print(f"{item.upper()}: {quantity}")  
+
 
 def inventory_print():
      print("This is your current inventory")
