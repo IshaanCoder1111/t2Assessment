@@ -414,7 +414,7 @@ tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_nam
 bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"], type_move=["Scratch", "Tackle"])
 stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"], type_move=["Rabies", "Bite", "Scratch"])
 citizen_names = ["Jack", "Fred", "Amelia"]
-citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetables", "coin", None], type_move=["Slap", "Punch", "Kick", "Choke"])
+citizen = Enemy(health=50, is_alive=True, power=5, enemy_name= random.choice(citizen_names), loot_options=["bread", "vegetable", "coin", None], type_move=["Slap", "Punch", "Kick", "Choke"])
 knight = Enemy(health=100, is_alive=True, power=20, enemy_name="Knight", loot_options=["armour", "sword"], type_move=["Stab", "Slash"])
 noble = Enemy(health=200, is_alive=True, power=40, enemy_name="Noble", loot_options=["land", "key"], type_move=["Money Shower", "Dollar Roller", "Cash Slam"])
 king = Enemy(health=500, is_alive=True, power=60, enemy_name="King", loot_options=["crown", "royal mantle"], type_move=["Fireball", "Ice Spray"])
@@ -445,20 +445,20 @@ class Item:
           
      
 
-bread = Item(2, 2, -3, 0, 3, "bread")
+bread = Item(2, 2, -3, 2, 3, "bread")
 armour = Item(10, 0, 0, 30, 100, "armour")
-meat = Item(2, 2, -5, 0, 5, "meat")
+meat = Item(2, 2, -5, 3, 5, "meat")
 coin = Item(0, 0, 0, 1, 0, "coin")
-vegetable = Item(0, 5, -3, 0, 2, "vegetable")
+vegetable = Item(0, 5, -3, 2, 2, "vegetable")
 knife = Item(20, 0, 0, 10, 0, "knife")
 jewellery = Item(0, 0, 0, 5, 0, "jewellery")
 wineglass = Item(0, 0, 0, 5, 0, "wineglass")
 medicine = Item(0, 0, 0, 8, 20, "medicine")
-oil = Item(0, 0, 0, 3, 0, "oil")
+oil = Item(0, 0, 0, 7, 0, "oil")
 sword = Item(50, 5 , 0, 30, 0, "sword")
 land = Item(0,0,0,50,0,"land ownership") 
 wine = Item(1,-2,-1,5,-2,"wine")
-key = Item(0,0,0,0,0,"key")
+key = Item(0,0,0,10000,0,"key")
 
 items_dictionary = {
     "bread": bread,
@@ -631,7 +631,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(200, True, 500, 100, 0, 0, 200, 1, 1, world_map=world_map)
+character = Character(100, True, 500, 100, 0, 0, 200, 1, 1, world_map=world_map)
 
 #Gameplay
 def dametime():
@@ -659,6 +659,7 @@ He was finally ready. \x1B[23m""")
           clear()
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
+          print(f"You have started with a knife in your inventory. Let's get going {namechosen}! Make sure to check the map you made so you don't fall in the ocean!")
           movingcharacter()
 
 def movingcharacter():
