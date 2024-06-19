@@ -1,3 +1,4 @@
+#BEFORE RUNNING PLEASE DOWNLOAD THIS "pip install opencv-python": 
 import os, time, random
 
 inventory = {
@@ -14,7 +15,7 @@ inventory = {
      "sword": 0,
      "land": 0,
      "wine": 0,
-     "key": 0
+     "key": 1
      }
 
 #Adding a clear function
@@ -146,7 +147,7 @@ world_map.add_area(Barren_Land)
 
 def print_world_map(world_map, character):
      import cv2
-     img = cv2.imread("MapCoordinate.png")
+     img = cv2.imread("FinalMap.png")
      cv2.imshow('map', img)
      cv2.waitKey(0) 
      cv2.destroyAllWindows()
@@ -234,6 +235,10 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                     print("""NOBLE: Ha! You really think you can get the key from me! How silly of you. 
 You'll never avenge your mother. I was able to take her life 20 years ago. 
 Now I'll take yours.""")
+                    time.sleep(3)
+                    print(f"{namechosen.upper()}Wait.. my mother.. she past...because of YOU!?")
+                    time.sleep(2)
+                    print("NOBLE: Indeed! Now so will you...")
                     input("Press Enter to Continue")
                     clear()
                     attackingfunction("Noble")     
@@ -243,6 +248,20 @@ Now I'll take yours.""")
                     input("Press Enter to Continue: ")
                     attackingfunction("Knight")            
                if (self.x, self.y) == (9,10):
+                    clear()
+                    print("""KING: Well. Well. Well. Why do you look familiar. Oh yes! 
+How could I possible forget a little boy 20 years ago weeping to be in his mother's arms. 
+HA! HOW PATHETIC!""")
+                    print(f"""{namechosen}I'm no longer the little boy I was 20 years ago.
+Your reign as king will soon be over.""")
+                    time.sleep(2)
+                    print("Because I...")
+                    time.sleep(2)
+                    print("will")
+                    time.sleep(2)
+                    print("be")
+                    time.sleep(2)
+                    print("KING")
                     attackingfunction("King")
                          
                          
@@ -657,7 +676,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(100, True, 0, 100, 0, 0, 200, 9, 1, world_map=world_map)
+character = Character(100, True, 20, 100, 0, 0, 200, 9, 9, world_map=world_map)
 
 #Gameplay
 def dametime():
