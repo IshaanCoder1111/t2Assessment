@@ -51,6 +51,7 @@ def nameselection():
     clear()
     print("Choose a Fierce Name to Proceed!")
     while True:
+        clear()
         global namechosen
         namechosen = input("Chosen Name(No More Than 10 Characters): ") 
         if 0 < len(namechosen) <= 10:
@@ -164,6 +165,8 @@ def print_world_map(world_map, character):
 
 
 def attackingfunction(enemy):
+     time.sleep(2)
+     clear()
      while True:
           print(f"You have encountered {enemy}")
           fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
@@ -506,7 +509,7 @@ def collect_items_barren_land(character, cell):
     items_chances = ["coin", "vegetable", "bread", None]  
     collect_item = random.choice(items_chances)  
     if collect_item:
-        print(f"You found some {collect_item.upper()} while roaming the land!")
+        print(f"You found a {collect_item.upper()} while roaming the land!")
         inventory_function(collect_item)
     else:
         print("There are no items here. Keep on searching!")
@@ -515,7 +518,7 @@ def collect_items_village(character, cell):
     items_chances = ["coin", "vegetable", "bread", None]  
     collect_item = random.choice(items_chances)  
     if collect_item:
-        print(f"You found some {collect_item.upper()} while roaming the village!")
+        print(f"You found a {collect_item.upper()} while roaming the village!")
         inventory_function(collect_item)
     else:
         print("There are no items here. Keep on searching!")
@@ -524,7 +527,7 @@ def collect_items_merchant_farm(character, cell):
     items_chances = ["oil","medicine","wine glass","jewellery","wine", None]  
     collect_item = random.choice(items_chances)  
     if collect_item:
-        print(f"You found some {collect_item.upper()} while roaming the farm!")
+        print(f"You found a {collect_item.upper()} while roaming the farm!")
         inventory_function(collect_item)
     else:
         print("There are no items here. Keep on searching!")
@@ -533,7 +536,7 @@ def collect_items_estate(character, cell):
     items_chances = ["armour", "land", None]  
     collect_item = random.choice(items_chances)  
     if collect_item:
-        print(f"You found some {collect_item.upper()} while roaming the estate!")
+        print(f"You found a {collect_item.upper()} while roaming the estate!")
         inventory_function(collect_item)
     else:
         print("There are no items here. Keep on searching!")
@@ -664,6 +667,8 @@ He was finally ready. \x1B[23m""")
 
 def movingcharacter():
           while character.is_alive == True: 
+               input("Press Enter To Continue")
+               clear()
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
                options = input("Select one of the following commands:\nshowmap move inventory eat exit\nChoice: ").strip().lower()   
                if "inventory" in options:
