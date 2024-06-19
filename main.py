@@ -144,18 +144,6 @@ Barren_Land = Area("Barren Land", "Uninhabited Land.", barren_land_coordinates, 
 
 world_map.add_area(Barren_Land)
 
-"""def print_world_map(world_map, character):
-    for y in range(world_map.height):
-        for x in range(world_map.width):
-            cell = world_map.get_cell(x, y)
-            if character.x == x and character.y == y:
-                 print("P", end=" ")
-            elif cell and cell.area:
-                print(cell.area.name[0], end=' ')
-            else:
-                print('.', end=' ')
-        print()"""
-
 def print_world_map(world_map, character):
      import cv2
      img = cv2.imread("MapCoordinates.png")
@@ -166,9 +154,13 @@ def print_world_map(world_map, character):
 
 def attackingfunction(enemy):
      time.sleep(2)
+     print(f"{namechosen.upper()}: Wait.. what is that thi-")
+     time.sleep(1.5)
      clear()
+     time.sleep(2.5)
      while True:
-          print(f"You have encountered {enemy}")
+          print(f"You have encountered...")
+          print(f"{enemy.upper()}")
           fightorflight = input("Do you choose to flee or fight\nNote: Fleeing results in a 5 healthpoint deduction\nChoice: ").strip().lower()
           if "fight" in fightorflight:
                character.attacking(enemy_var=enemy)
@@ -240,8 +232,8 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                     clear()
                     time.sleep(1)
                     print("""NOBLE: Ha! You really think you can get the key from me! How silly of you. 
-       You'll never avenge your mother. I was able to take her life 20 years ago. 
-       Now I'll take yours.""")
+You'll never avenge your mother. I was able to take her life 20 years ago. 
+Now I'll take yours.""")
                     input("Press Enter to Continue")
                     clear()
                     attackingfunction("Noble")     
@@ -711,6 +703,7 @@ def movingcharacter():
                elif "eat" in options or options == "2":
                     consuming_food()
                elif "showmap" in options or options == "3":
+                    print(f"Your currect coordinates are {character.x, character.y}")
                     print_world_map(world_map,character)
                elif "move" in options or options == "4":
                     direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower().strip()
