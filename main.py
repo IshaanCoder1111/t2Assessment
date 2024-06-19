@@ -1,4 +1,7 @@
 #BEFORE RUNNING PLEASE DOWNLOAD THIS "pip install opencv-python": 
+#NABETHAN DID THE LOCATIONS
+#DEBARUN DID THE ENEMIES
+#ISHAAN DID THE ITEMS
 import os, time, random
 
 inventory = {
