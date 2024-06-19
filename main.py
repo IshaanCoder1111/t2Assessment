@@ -146,7 +146,7 @@ world_map.add_area(Barren_Land)
 
 def print_world_map(world_map, character):
      import cv2
-     img = cv2.imread("MapCoordinates.png")
+     img = cv2.imread("MapCoordinate.png")
      cv2.imshow('map', img)
      cv2.waitKey(0) 
      cv2.destroyAllWindows()
@@ -436,9 +436,6 @@ class Enemy(Entity):
 
           
           
-
-
-
 tiger = Enemy(health=random.randint(95, 105), is_alive=True, power=50, enemy_name="Tiger", loot_options=[None, "meat"], type_move=["Scratch", "Bite"])
 bear = Enemy(health=random.randint(80,90), is_alive=True, power=40, enemy_name="bear", loot_options=[None, "meat"], type_move=["Scratch", "Tackle"])
 stray_dog = Enemy(health=30, is_alive=True, power=10, enemy_name="Stray Dog", loot_options=["meat"], type_move=["Rabies", "Bite", "Scratch"])
@@ -660,7 +657,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(100, True, 0, 100, 0, 0, 200, 1, 1, world_map=world_map)
+character = Character(100, True, 0, 100, 0, 0, 200, 9, 1, world_map=world_map)
 
 #Gameplay
 def dametime():
