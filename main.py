@@ -158,7 +158,7 @@ def attackingfunction(enemy):
      print(f"{namechosen.upper()}: Wait.. what is that thi-")
      time.sleep(1.5)
      clear()
-     time.sleep(2.5)
+     time.sleep(1)
      while True:
           print(f"You have encountered...")
           print(f"{enemy.upper()}")
