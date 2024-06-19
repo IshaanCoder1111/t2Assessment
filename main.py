@@ -53,7 +53,7 @@ def nameselection():
     while True:
         clear()
         global namechosen
-        namechosen = input("Chosen Name(No More Than 10 Characters): ") 
+        namechosen = input("Chosen Name(No More Than 10 Characters): ").capitalize().strip() 
         if 0 < len(namechosen) <= 10:
             print(f"WELCOME TO KING OF THE CASTLE {namechosen.upper()}")
             input("Press any enter to continue: ")
@@ -158,7 +158,7 @@ world_map.add_area(Barren_Land)
 
 def print_world_map(world_map, character):
      import cv2
-     img = cv2.imread("Map.png")
+     img = cv2.imread("MapCoordinates.png")
      cv2.imshow('map', img)
      cv2.waitKey(0) 
      cv2.destroyAllWindows()
@@ -255,7 +255,6 @@ Now what would you like to do, if you buy an item I promise not to tell the king
                          
                          
 
-
                cell = self.world_map.get_cell(self.x, self.y)
                if cell and cell.area:
                     if cell.area.name == "Ocean":
@@ -279,17 +278,53 @@ Now what would you like to do, if you buy an item I promise not to tell the king
      def attacking(self, enemy_var):
           self.stamina -= 3
           self.hunger += 3
-          while True:
-               power_move = input("What move would you like to use, Knife Throw or Knife Stab?: ").lower().strip()
-               if "knife throw" in power_move:
-                    power_move = "knife throw"
-                    break
-               if "knife stab" in power_move:
-                    power_move = "knife stab"
-                    break
+          break_out = True
+          while break_out == True:
+               if inventory["sword"] > 0:
+                    weapon_used  = input("You have the sword and the knife, which weapon would you like to use?: ").lower().strip()
+                    if "sword" in weapon_used:
+                         while True:
+                              power_move = input("Your sword is activated, what move would you like to use, slash or jab?: ").lower().strip()
+                              if "jab" in power_move:
+                                   power_move = "sword jab"
+                                   break_out = False
+                                   break
+                              elif "slash" in power_move:
+                                   power_move = "sword slash"
+                                   break_out = False
+                                   break
+                    elif "knife" in weapon_used:
+                         while True:
+                              power_move = input("What move would you like to use, Knife Throw or Knife Stab?: ").lower().strip()
+                              if "throw" in power_move:
+                                   power_move = "knife throw"
+                                   break_out = False
+                                   break
+                              if "stab" in power_move:
+                                   power_move = "knife stab"
+                                   break_out = False
+                                   break
+                              else:
+                                   print("Thats not an option")
+                                   time.sleep(1)
+                    else:
+                         print("Thats not an option")
+                         time.sleep(1)
                else:
-                    print("Thats not an option")
-                    time.sleep(1)
+                    while True:
+                              power_move = input("What move would you like to use, Knife Throw or Knife Stab?: ").lower().strip()
+                              if "throw" in power_move:
+                                   power_move = "knife throw"
+                                   break_out = False
+                                   break
+                              if "stab" in power_move:
+                                   power_move = "knife stab"
+                                   break_out = False
+                                   break
+                              else:
+                                   print("Thats not an option")
+                                   time.sleep(1)
+
           if isinstance(enemy_var, str):
             enemy_var = all_enemy_dict[enemy_var]
           hitormiss2 = random.randint(1,2)
@@ -670,14 +705,14 @@ def movingcharacter():
                input("Press Enter To Continue")
                clear()
                print(f"Your status is currently: Health={character.health}, Power={character.power}, Money={character.money}, MaxHealth={character.max_health}, Stamina={character.stamina}, Hunger={character.hunger}") 
-               options = input("Select one of the following commands:\nshowmap move inventory eat exit\nChoice: ").strip().lower()   
-               if "inventory" in options:
+               options = input("Select one of the following commands:\ninventory(1) eat(2) showmap(3) move(4) exit(5)\nChoice: ").strip().lower()   
+               if "inventory" in options or options == "1":
                     inventory_print()
-               elif "eat" in options:
+               elif "eat" in options or options == "2":
                     consuming_food()
-               elif "showmap" in options:
+               elif "showmap" in options or options == "3":
                     print_world_map(world_map,character)
-               elif "move" in options:
+               elif "move" in options or options == "4":
                     direction = input("Where do you want to move? (north, south, east, west, or type 'exit' to stop): ").lower().strip()
                     if "exit" in direction:
                          movingcharacter()
@@ -700,7 +735,7 @@ def movingcharacter():
                
                     else:
                          print("Invalid direction. Please try again.")  
-               elif "exit" in options:
+               elif "exit" in options or options == "5":
                     quitting = input("Are you sure you would like to exit the game, if you type yes your progress will not be saved and you will exit or type no to cancel.") 
                     if quitting == "yes":
                          import sys
