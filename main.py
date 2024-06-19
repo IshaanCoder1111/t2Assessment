@@ -415,8 +415,7 @@ class Enemy(Entity):
                character.money += coin.value
                movingcharacter()
           if loot == "sword":
-               print("Your knife is thrown away")
-               '''inventory.remove("knife")'''
+               character.consuming(sword)
                character.power -= 20
                character.stamina -= 10
                inventory_function("sword")
@@ -669,7 +668,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(100, True, 500, 100, 0, 0, 200, 1, 1, world_map=world_map)
+character = Character(100, True, 0, 100, 0, 0, 200, 1, 1, world_map=world_map)
 
 #Gameplay
 def dametime():
@@ -697,6 +696,7 @@ He was finally ready. \x1B[23m""")
           clear()
           print(f"You are in the game {namechosen}")
           inventory_function("knife")
+          character.consuming(knife)
           print(f"You have started with a knife in your inventory. Let's get going {namechosen}! Make sure to check the map you made so you don't fall in the ocean!")
           movingcharacter()
 
