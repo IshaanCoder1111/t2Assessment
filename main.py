@@ -523,7 +523,7 @@ items_dictionary = {
 }
 
 def barren_enemy_detection(character, cell):
-     enemychances = ["Stray Dog", "Citizen", None, None, None, None, None,]
+     enemychances = ["Stray Dog", "Citizen", None, None, None]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
           attackingfunction(enemy_detection)
@@ -531,7 +531,7 @@ def barren_enemy_detection(character, cell):
           print("There are no enemies in sight, keep moving soldier!")
 
 def village_enemy_detection(character, cell):
-     enemychances = ["Stray Dog", "Citizen"]
+     enemychances = ["Stray Dog", "Citizen", None, None, None, None, None, ]
      enemy_detection = random.choice(enemychances)
      if enemy_detection:
           attackingfunction(enemy_detection)
@@ -676,7 +676,7 @@ def consuming_food():
                     print("Thats not an option")
                              
 
-character = Character(100, True, 20, 100, 0, 0, 200, 9, 9, world_map=world_map)
+character = Character(100, True, 20, 100, 0, 0, 200, 1, 1, world_map=world_map)
 
 #Gameplay
 def dametime():
