@@ -15,7 +15,7 @@ inventory = {
      "sword": 0,
      "land": 0,
      "wine": 0,
-     "key": 1
+     "key": 0
      }
 
 #Adding a clear function
